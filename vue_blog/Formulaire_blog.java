@@ -1,27 +1,27 @@
 package vue_blog;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import controller_blog.UserDao;
-import modele_blog.User;
-
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import java.awt.Font;
 import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JPasswordField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import controller_blog.UserDao;
+import modele_blog.User;
 
 public class Formulaire_blog extends JFrame {
 
@@ -53,6 +53,8 @@ public class Formulaire_blog extends JFrame {
 	
 	private JTextField email_connexion;
 	private JPasswordField pass_connexion;
+	//private JTable table;
+	private JTable table_1;
 	/**
 	 * Create the frame.
 	 */
@@ -71,6 +73,8 @@ public class Formulaire_blog extends JFrame {
 		layeredPane.setOpaque(true);
 		layeredPane.setBounds(0, 0, 556, 364);
 		panel_2.add(layeredPane);
+						
+						
 						
 						
 						panel.setBounds(0, 0, 556, 370);
@@ -146,7 +150,7 @@ public class Formulaire_blog extends JFrame {
 						
 						envoyer.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							String nom=inp_nom.getText();
+							/*String nom=inp_nom.getText();
 							String prenom=inp_prenom.getText();
 							String email=inp_email.getText();
 							String password=String.valueOf(inp_password.getPassword());
@@ -155,32 +159,16 @@ public class Formulaire_blog extends JFrame {
 						
 						if (userDao.create(user)) {
 							JOptionPane.showMessageDialog(contentPane,"bravo compte crée");
-							add_remove(panel_1);
+							
 						}else {
 							JOptionPane.showMessageDialog(contentPane,"changez de mail ou remplissez bien les champs !");
-						};
+						};*/
+							
+							test bh=new test();
+							add_remove(bh);
 						}
 						
 						});
-						layeredPane.setLayer(panel_3, 0);
-						panel_3.setBackground(new Color(176, 196, 222));
-						
-						
-						panel_3.setBounds(0, 0, 556, 370);
-						layeredPane.add(panel_3);
-						panel_3.setLayout(null);
-						
-						JButton deconnecter = new JButton("Se d\u00E9connecter");
-						deconnecter.setFocusable(false);
-						deconnecter.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent e) {
-								add_remove(panel_1);
-								panel_3.removeAll();
-								panel_3.add(deconnecter);
-							}
-						});
-						deconnecter.setBounds(421, 336, 125, 23);
-						panel_3.add(deconnecter);
 						
 						
 						panel_1.setLayout(null);
@@ -231,6 +219,7 @@ public class Formulaire_blog extends JFrame {
 											lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 9));
 											lblNewLabel_2.setBounds(10, 345, 395, 14);
 											panel_3.add(lblNewLabel_2);
+											//metre string data ici
 											
 										}else {
 											JOptionPane.showMessageDialog(contentPane,"compte inexistant ou mauvais mot de passe");
@@ -261,6 +250,48 @@ public class Formulaire_blog extends JFrame {
 								lblNewLabel_4.setIcon(new ImageIcon(Formulaire_blog.class.getResource("/images/img3.gif")));
 								lblNewLabel_4.setBounds(27, 146, 134, 121);
 								panel_1.add(lblNewLabel_4);
+								layeredPane.setLayer(panel_3, 0);
+								panel_3.setAutoscrolls(true);
+								panel_3.setBackground(new Color(176, 196, 222));
+								
+								
+								panel_3.setBounds(0, 0, 556, 370);
+								layeredPane.add(panel_3);
+								
+								JButton deconnecter = new JButton("Se d\u00E9connecter");
+								deconnecter.setBounds(421, 336, 125, 23);
+								deconnecter.setFocusable(false);
+								deconnecter.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent e) {
+										add_remove(panel_1);
+										panel_3.removeAll();
+										panel_3.add(deconnecter);
+									}
+								});
+								panel_3.setLayout(null);
+								//table.setFillsViewportHeight(true);
+								
+								table_1 = new JTable();
+								table_1.setBackground(Color.ORANGE);
+								table_1.setModel(new DefaultTableModel(
+									new Object[][] {
+										{null, null, null, null, null},
+									},
+									new String[] {
+										"Titre", "r\u00E9sum\u00E9", "contenu", "Date de cr\u00E9ation", "Auteur"
+									}
+								));
+								table_1.getColumnModel().getColumn(3).setPreferredWidth(92);
+								table_1.getColumnModel().getColumn(4).setPreferredWidth(101);
+								table_1.setBounds(10, 45, 100, 200);
+								//panel_3.add(table_1);
+								
+								JScrollPane scrollPane = new JScrollPane(table_1);
+								scrollPane.setBounds(10, 64, 526,243);
+								panel_3.add(scrollPane);
+								
+								
+								panel_3.add(deconnecter);
 						
 
 						/*JLabel lblNewLabel_2 = new JLabel("adresse de connexion : ");
