@@ -25,6 +25,8 @@ import controller_blog.ArticleDao;
 import controller_blog.UserDao;
 import modele_blog.Articles;
 import modele_blog.User;
+import javax.swing.JTextArea;
+import java.awt.SystemColor;
 
 public class Formulaire_blog extends JFrame {
 
@@ -53,11 +55,14 @@ public class Formulaire_blog extends JFrame {
 	JPanel panel = new JPanel();
 	JPanel panel_1 = new JPanel();
 	JPanel panel_3 = new JPanel();
-	
+	JPanel panel_4 = new JPanel();
+	JTextArea cont_article = new JTextArea();
 	private JTextField email_connexion;
 	private JPasswordField pass_connexion;
 	//private JTable table;
 	private JTable table_1;
+	private JTextField cont_title;
+	
 	/**
 	 * Create the frame.
 	 */
@@ -76,6 +81,9 @@ public class Formulaire_blog extends JFrame {
 		layeredPane.setOpaque(true);
 		layeredPane.setBounds(0, 0, 556, 364);
 		panel_2.add(layeredPane);
+						
+						
+						
 						
 						
 						
@@ -224,10 +232,105 @@ public class Formulaire_blog extends JFrame {
 													panel_3.add(lblNewLabel_2);
 													//metre string data ici
 													
-													ArticleDao read_article= new ArticleDao();
-													System.out.println(read_article.read());
-													
+													//trouver les articles
+													ArticleDao read_article = new ArticleDao();
 													add_row(read_article.read());
+													
+
+													JButton add_article = new JButton("ajouter un article");
+													add_article.addActionListener(new ActionListener() {
+														public void actionPerformed(ActionEvent e) {
+															
+															add_remove(panel_4);
+															
+														}
+													});
+													add_article.setFocusable(false);
+													add_article.setBounds(400, 11, 146, 23);
+													panel_3.add(add_article);
+													
+													JButton envoyer_article = new JButton("Envoyer l'article");
+													envoyer_article.addActionListener(new ActionListener() {
+														public void actionPerformed(ActionEvent e) {
+															String email= email_connexion.getText();
+															String password=String.valueOf(pass_connexion.getPassword());
+															UserDao userDao=new	UserDao();
+															String titre=cont_title.getText();
+															String contenu=cont_article.getText();
+															System.out.println(userDao.findby(email,password).get(0).getId());
+															
+															
+															
+															
+															Articles article= new Articles(titre,contenu,userDao.findby(email,password).get(0).getId());
+															ArticleDao crud= new ArticleDao();
+															if(crud.create(article)) {
+																JOptionPane.showMessageDialog(contentPane,"votre article a été ajouté !");
+																 titre=null;
+																 contenu=null;
+															};
+														}
+													});
+													envoyer_article.setBounds(70, 299, 158, 23);
+													panel_4.add(envoyer_article);
+													
+													
+													
+													JButton retour = new JButton("retour");
+													retour.addActionListener(new ActionListener() {
+														public void actionPerformed(ActionEvent e) {
+															panel_3.removeAll();
+															String email= email_connexion.getText();
+															String password=String.valueOf(pass_connexion.getPassword());
+															add_remove(panel_3);
+															System.out.println(userDao.findby(email,password).get(0).getPrenom());
+															JLabel lblNewLabel_1 = new JLabel("Bonjour "+userDao.findby(email,password).get(0).getPrenom());
+															lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+															lblNewLabel_1.setBounds(25, 34, 124, 14);
+															panel_3.add(lblNewLabel_1);
+															
+															JLabel lblNewLabel_2 = new JLabel("adresse de connexion : "+userDao.findby(email,password).get(0).getEmail()+"");
+															lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 9));
+															lblNewLabel_2.setBounds(10, 345, 395, 14);
+															panel_3.add(lblNewLabel_2);
+															
+															JButton add_article = new JButton("ajouter un article");
+															add_article.addActionListener(new ActionListener() {
+																public void actionPerformed(ActionEvent e) {
+																	add_remove(panel_4);
+																	
+																}
+															});
+															
+															
+															add_article.setFocusable(false);
+															add_article.setBounds(400, 11, 146, 23);
+															panel_3.add(add_article);
+															
+															JButton deconnecter = new JButton("Se d\u00E9connecter");
+															deconnecter.setBounds(421, 336, 125, 23);
+															deconnecter.setFocusable(false);
+															deconnecter.addActionListener(new ActionListener() {
+																public void actionPerformed(ActionEvent e) {
+																	add_remove(panel_1);
+																	panel_3.removeAll();
+																	panel_3.add(deconnecter);
+																}
+															});
+															panel_3.setLayout(null);
+															panel_3.add(deconnecter);
+															
+															ArticleDao read_articl = new ArticleDao();
+															add_row(read_articl.read());
+															System.out.println(read_articl.read());
+															panel_3.repaint();
+															panel_3.revalidate();
+															
+															
+														}
+													});
+													retour.setBounds(382, 299, 89, 23);
+													panel_4.add(retour);
 												}else {
 													JOptionPane.showMessageDialog(contentPane,"compte inexistant ou mauvais mot de passe");
 												}
@@ -285,6 +388,33 @@ public class Formulaire_blog extends JFrame {
 										
 										
 										panel_3.add(deconnecter);
+										panel_4.setBackground(SystemColor.activeCaption);
+										
+										
+										panel_4.setBounds(0, 0, 556, 370);
+										layeredPane.add(panel_4);
+										panel_4.setLayout(null);
+										
+										JLabel titre_article = new JLabel("Titre de l'article");
+										titre_article.setBounds(28, 31, 89, 14);
+										panel_4.add(titre_article);
+										
+										cont_title = new JTextField();
+										cont_title.setBounds(28, 56, 250, 20);
+										panel_4.add(cont_title);
+										cont_title.setColumns(10);
+										
+										JLabel contenu_article = new JLabel("Contenu de l'article");
+										contenu_article.setBounds(28, 107, 152, 14);
+										panel_4.add(contenu_article);
+										
+										
+										cont_article.setLineWrap(true);
+										cont_article.setBounds(28, 132, 250, 127);
+										panel_4.add(cont_article);
+										
+										
+						
 						
 
 						/*JLabel lblNewLabel_2 = new JLabel("adresse de connexion : ");
@@ -292,6 +422,7 @@ public class Formulaire_blog extends JFrame {
 						lblNewLabel_2.setBounds(10, 345, 395, 14);
 						panel_3.add(lblNewLabel_2);*/
 	}
+	//fonction de changement de panels
 	public void add_remove( JPanel pane) {
 		layeredPane.removeAll();
 		//pane.setVisible(false);
@@ -301,6 +432,8 @@ public class Formulaire_blog extends JFrame {
 		pane.repaint();
 		pane.revalidate();
 	}
+	
+	//fonction read des articles dans le tableau
 	public void add_row( ArrayList<Articles> Article) {
 		//on créer le tableau
 		table_1 = new JTable();
@@ -326,10 +459,7 @@ public class Formulaire_blog extends JFrame {
 				
 		for (Articles articles : Article) {
 			// on ajoute dynamiquement chaque ligne avec un foreach
-			model_table_1.addRow(new Object[]{articles.getTitre(), articles.getContenu(),articles.getDate(),articles.getAuteur()});
-			
+			model_table_1.addRow(new Object[]{articles.getTitre(), articles.getContenu(),articles.getDate(),articles.getPrenom_auteur()});
 		}
-		
-		
 	}
 }

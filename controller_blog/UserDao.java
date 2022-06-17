@@ -53,7 +53,7 @@ public class UserDao implements Idao<User> {
 			
 			while ( rs.next()) {
 				
-				User user= new User(rs.getString("nom"),rs.getString("prenom"),rs.getString("email"), rs.getString("password"));
+				User user= new User(rs.getInt("idusers"),rs.getString("nom"),rs.getString("prenom"),rs.getString("email"), rs.getString("password"));
 				tab.add(user);
 			} ;
 			
@@ -80,7 +80,7 @@ public class UserDao implements Idao<User> {
 			
 			while ( rs.next()) {
 				
-				User user= new User(rs.getString("nom"),rs.getString("prenom"),rs.getString("email"), rs.getString("password"));
+				User user= new User(rs.getInt("idusers"),rs.getString("nom"),rs.getString("prenom"),rs.getString("email"), rs.getString("password"));
 				tab.add(user);
 			} ;
 			
@@ -104,9 +104,10 @@ public class UserDao implements Idao<User> {
 			
 			
 			if(rs.next()) {
-					User user= new User(rs.getString("nom"),rs.getString("prenom"),rs.getString("email"), rs.getString("password"));
+					User user= new User(rs.getInt("idusers"),rs.getString("nom"),rs.getString("prenom"),rs.getString("email"), rs.getString("password"));
 					tab_user.add(user);
 					//return tab_user;
+					
 			}
 			
 			

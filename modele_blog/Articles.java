@@ -5,7 +5,8 @@ public class Articles {
 	private String titre;
 	private String contenu;
 	private String date;
-	private String auteur;
+	private String prenom_auteur;
+	private int auteur;
 	
 	
 	public int getId() {
@@ -56,19 +57,19 @@ public class Articles {
 
 
 
-	public String getAuteur() {
+	public int getAuteur() {
 		return auteur;
 	}
 
 
 
-	public void setAuteur(String auteur) {
+	public void setAuteur(int auteur) {
 		this.auteur = auteur;
 	}
 
 
 
-	public Articles(int id, String titre, String contenu, String date, String auteur) {
+	public Articles(int id, String titre, String contenu, String date, int auteur) {
 		super();
 		this.id = id;
 		this.titre = titre;
@@ -79,12 +80,36 @@ public class Articles {
 
 
 
-	public Articles(String titre, String contenu, String date, String auteur) {
+	public Articles(String titre, String contenu, String date, int auteur) {
 		super();
 		this.titre = titre;
 		this.contenu = contenu;
 		this.date = date;
 		this.auteur = auteur;
+	}
+
+	
+
+
+	public Articles(String titre, String contenu, int auteur) {
+		super();
+		this.titre = titre;
+		this.contenu = contenu;
+		this.auteur = auteur;
+	}
+
+
+
+	
+
+
+
+	public Articles(String titre, String contenu, String date, String prenom_auteur) {
+		super();
+		this.titre = titre;
+		this.contenu = contenu;
+		this.date = date;
+		this.prenom_auteur = prenom_auteur;
 	}
 
 
@@ -93,6 +118,18 @@ public class Articles {
 	public String toString() {
 		return "Articles [id=" + id + ", titre=" + titre + ", contenu=" + contenu + ", date=" + date + ", auteur="
 				+ auteur + "]";
+	}
+
+
+
+	public String getPrenom_auteur() {
+		return prenom_auteur;
+	}
+
+
+
+	public void setPrenom_auteur(String prenom_auteur) {
+		this.prenom_auteur = prenom_auteur;
 	}
 	
 	
