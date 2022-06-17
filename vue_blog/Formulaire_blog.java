@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,7 +21,9 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import controller_blog.ArticleDao;
 import controller_blog.UserDao;
+import modele_blog.Articles;
 import modele_blog.User;
 
 public class Formulaire_blog extends JFrame {
@@ -150,7 +153,7 @@ public class Formulaire_blog extends JFrame {
 						
 						envoyer.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							/*String nom=inp_nom.getText();
+							String nom=inp_nom.getText();
 							String prenom=inp_prenom.getText();
 							String email=inp_email.getText();
 							String password=String.valueOf(inp_password.getPassword());
@@ -162,136 +165,126 @@ public class Formulaire_blog extends JFrame {
 							
 						}else {
 							JOptionPane.showMessageDialog(contentPane,"changez de mail ou remplissez bien les champs !");
-						};*/
+						};
 							
-							test bh=new test();
-							add_remove(bh);
+							
+							add_remove(panel_1);
 						}
 						
 						});
-						
-						
-						panel_1.setLayout(null);
-						panel_1.setBackground(new Color(176, 196, 222));
-						panel_1.setBounds(0, 0, 556, 370);
-						layeredPane.add(panel_1);
-						
-						JLabel Title_connexion = new JLabel("--Connexion--");
-						Title_connexion.setForeground(new Color(0, 0, 0));
-						Title_connexion.setFont(new Font("Source Sans Pro Black", Font.BOLD, 23));
-						Title_connexion.setBounds(188, 11, 175, 30);
-						panel_1.add(Title_connexion);
-						
-						JLabel lblEmail_1 = new JLabel("email ");
-						lblEmail_1.setBounds(291, 177, 35, 14);
-						panel_1.add(lblEmail_1);
-						
-						JLabel lblPassword_1 = new JLabel("mot de passe");
-						lblPassword_1.setBounds(241, 228, 85, 14);
-						panel_1.add(lblPassword_1);
-						
-						email_connexion = new JTextField();
-						email_connexion.setColumns(10);
-						email_connexion.setBounds(335, 174, 118, 20);
-						panel_1.add(email_connexion);
-						
-						pass_connexion = new JPasswordField();
-						pass_connexion.setBounds(335, 225, 118, 20);
-						panel_1.add(pass_connexion);
-						
-								JButton connexion = new JButton("connexion");
-								connexion.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent e) {
-										String email= email_connexion.getText();
-										String password=String.valueOf(pass_connexion.getPassword());
+								
+								
+								panel_1.setLayout(null);
+								panel_1.setBackground(new Color(176, 196, 222));
+								panel_1.setBounds(0, 0, 556, 370);
+								layeredPane.add(panel_1);
+								
+								JLabel Title_connexion = new JLabel("--Connexion--");
+								Title_connexion.setForeground(new Color(0, 0, 0));
+								Title_connexion.setFont(new Font("Source Sans Pro Black", Font.BOLD, 23));
+								Title_connexion.setBounds(188, 11, 175, 30);
+								panel_1.add(Title_connexion);
+								
+								JLabel lblEmail_1 = new JLabel("email ");
+								lblEmail_1.setBounds(291, 177, 35, 14);
+								panel_1.add(lblEmail_1);
+								
+								JLabel lblPassword_1 = new JLabel("mot de passe");
+								lblPassword_1.setBounds(241, 228, 85, 14);
+								panel_1.add(lblPassword_1);
+								
+								email_connexion = new JTextField();
+								email_connexion.setColumns(10);
+								email_connexion.setBounds(335, 174, 118, 20);
+								panel_1.add(email_connexion);
+								
+								pass_connexion = new JPasswordField();
+								pass_connexion.setBounds(335, 225, 118, 20);
+								panel_1.add(pass_connexion);
+								
+										JButton connexion = new JButton("connexion");
+										connexion.addActionListener(new ActionListener() {
+											public void actionPerformed(ActionEvent e) {
+												String email= email_connexion.getText();
+												String password=String.valueOf(pass_connexion.getPassword());
+												
+												UserDao userDao=new	UserDao();
+												System.out.println(userDao.findby(email,password));
+												if (userDao.findby(email,password).size()!= 0) {
+													JOptionPane.showMessageDialog(contentPane,"vous êtes connecté !");
+													add_remove(panel_3);
+													JLabel lblNewLabel_1 = new JLabel("Bonjour "+userDao.findby(email,password).get(0).getPrenom());
+													lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+													lblNewLabel_1.setBounds(25, 34, 124, 14);
+													panel_3.add(lblNewLabel_1);
+													
+													JLabel lblNewLabel_2 = new JLabel("adresse de connexion : "+userDao.findby(email,password).get(0).getEmail()+"");
+													lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 9));
+													lblNewLabel_2.setBounds(10, 345, 395, 14);
+													panel_3.add(lblNewLabel_2);
+													//metre string data ici
+													
+													ArticleDao read_article= new ArticleDao();
+													System.out.println(read_article.read());
+													
+													add_row(read_article.read());
+												}else {
+													JOptionPane.showMessageDialog(contentPane,"compte inexistant ou mauvais mot de passe");
+												}
+											}
+										});
+										connexion.setBounds(226, 307, 110, 23);
+										panel_1.add(connexion);
 										
-										UserDao userDao=new	UserDao();
-										System.out.println(userDao.findby(email,password));
-										if (userDao.findby(email,password).size()!= 0) {
-											JOptionPane.showMessageDialog(contentPane,"vous êtes connecté !");
-											add_remove(panel_3);
-											JLabel lblNewLabel_1 = new JLabel("Bonjour "+userDao.findby(email,password).get(0).getPrenom());
-											lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
-											lblNewLabel_1.setBounds(25, 34, 124, 14);
-											panel_3.add(lblNewLabel_1);
-											
-											JLabel lblNewLabel_2 = new JLabel("adresse de connexion : "+userDao.findby(email,password).get(0).getEmail()+"");
-											lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 9));
-											lblNewLabel_2.setBounds(10, 345, 395, 14);
-											panel_3.add(lblNewLabel_2);
-											//metre string data ici
-											
-										}else {
-											JOptionPane.showMessageDialog(contentPane,"compte inexistant ou mauvais mot de passe");
-										}
-									}
-								});
-								connexion.setBounds(226, 307, 110, 23);
-								panel_1.add(connexion);
-								
-								JLabel lblNewLabel_5_1 = new JLabel("Blog");
-								lblNewLabel_5_1.setBackground(new Color(240, 248, 255));
-								lblNewLabel_5_1.setForeground(new Color(0, 0, 0));
-								lblNewLabel_5_1.setFont(new Font("Source Sans Pro Black", Font.BOLD, 30));
-								lblNewLabel_5_1.setBounds(27, 47, 99, 55);
-								panel_1.add(lblNewLabel_5_1);
-								
-								
-								JButton btnNewButton_1 = new JButton("inscription");
-								btnNewButton_1.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent e) {
-										add_remove(panel);
-									}
-								});
-								btnNewButton_1.setBounds(346, 307, 118, 23);
-								panel_1.add(btnNewButton_1);
-								
-								JLabel lblNewLabel_4 = new JLabel("New label");
-								lblNewLabel_4.setIcon(new ImageIcon(Formulaire_blog.class.getResource("/images/img3.gif")));
-								lblNewLabel_4.setBounds(27, 146, 134, 121);
-								panel_1.add(lblNewLabel_4);
-								layeredPane.setLayer(panel_3, 0);
-								panel_3.setAutoscrolls(true);
-								panel_3.setBackground(new Color(176, 196, 222));
-								
-								
-								panel_3.setBounds(0, 0, 556, 370);
-								layeredPane.add(panel_3);
-								
-								JButton deconnecter = new JButton("Se d\u00E9connecter");
-								deconnecter.setBounds(421, 336, 125, 23);
-								deconnecter.setFocusable(false);
-								deconnecter.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent e) {
-										add_remove(panel_1);
-										panel_3.removeAll();
+										JLabel lblNewLabel_5_1 = new JLabel("Blog");
+										lblNewLabel_5_1.setBackground(new Color(240, 248, 255));
+										lblNewLabel_5_1.setForeground(new Color(0, 0, 0));
+										lblNewLabel_5_1.setFont(new Font("Source Sans Pro Black", Font.BOLD, 30));
+										lblNewLabel_5_1.setBounds(27, 47, 99, 55);
+										panel_1.add(lblNewLabel_5_1);
+										
+										
+										JButton btnNewButton_1 = new JButton("inscription");
+										btnNewButton_1.addActionListener(new ActionListener() {
+											public void actionPerformed(ActionEvent e) {
+												add_remove(panel);
+											}
+										});
+										btnNewButton_1.setBounds(346, 307, 118, 23);
+										panel_1.add(btnNewButton_1);
+										
+										JLabel lblNewLabel_4 = new JLabel("New label");
+										lblNewLabel_4.setIcon(new ImageIcon(Formulaire_blog.class.getResource("/images/img3.gif")));
+										lblNewLabel_4.setBounds(27, 146, 134, 121);
+										panel_1.add(lblNewLabel_4);
+										layeredPane.setLayer(panel_3, 0);
+										panel_3.setAutoscrolls(true);
+										panel_3.setBackground(new Color(176, 196, 222));
+										
+										
+										panel_3.setBounds(0, 0, 556, 370);
+										layeredPane.add(panel_3);
+										
+										JButton deconnecter = new JButton("Se d\u00E9connecter");
+										deconnecter.setBounds(421, 336, 125, 23);
+										deconnecter.setFocusable(false);
+										deconnecter.addActionListener(new ActionListener() {
+											public void actionPerformed(ActionEvent e) {
+												add_remove(panel_1);
+												panel_3.removeAll();
+												panel_3.add(deconnecter);
+											}
+										});
+										panel_3.setLayout(null);
+										//table.setFillsViewportHeight(true);
+										
+										
+										//panel_3.add(table_1);
+										
+										
+										
+										
 										panel_3.add(deconnecter);
-									}
-								});
-								panel_3.setLayout(null);
-								//table.setFillsViewportHeight(true);
-								
-								table_1 = new JTable();
-								table_1.setBackground(Color.ORANGE);
-								table_1.setModel(new DefaultTableModel(
-									new Object[][] {
-										{null, null, null, null, null},
-									},
-									new String[] {
-										"Titre", "r\u00E9sum\u00E9", "contenu", "Date de cr\u00E9ation", "Auteur"
-									}
-								));
-								table_1.getColumnModel().getColumn(3).setPreferredWidth(92);
-								table_1.getColumnModel().getColumn(4).setPreferredWidth(101);
-								table_1.setBounds(10, 45, 100, 200);
-								//panel_3.add(table_1);
-								
-								JScrollPane scrollPane = new JScrollPane(table_1);
-								scrollPane.setBounds(10, 64, 526,243);
-								panel_3.add(scrollPane);
-								
-								
-								panel_3.add(deconnecter);
 						
 
 						/*JLabel lblNewLabel_2 = new JLabel("adresse de connexion : ");
@@ -307,5 +300,36 @@ public class Formulaire_blog extends JFrame {
 		layeredPane.add(pane);
 		pane.repaint();
 		pane.revalidate();
+	}
+	public void add_row( ArrayList<Articles> Article) {
+		//on créer le tableau
+		table_1 = new JTable();
+		table_1.setBackground(Color.ORANGE);
+		
+		table_1.setModel(new DefaultTableModel(
+				new String[] {
+					"Titre", "contenu", "Date de cr\u00E9ation", "Auteur"
+				},
+				0
+				));
+				table_1.getColumnModel().getColumn(3).setPreferredWidth(92);
+				table_1.getColumnModel().getColumn(3).setPreferredWidth(101);
+				table_1.setBounds(10, 45, 100, 200);
+				
+				JScrollPane scrollPane = new JScrollPane(table_1);
+				scrollPane.setBounds(10, 64, 526,243);
+				panel_3.add(scrollPane);
+				
+				//on récupère le modèle du tableau 1
+				DefaultTableModel model_table_1= (DefaultTableModel) table_1.getModel();
+			   
+				
+		for (Articles articles : Article) {
+			// on ajoute dynamiquement chaque ligne avec un foreach
+			model_table_1.addRow(new Object[]{articles.getTitre(), articles.getContenu(),articles.getDate(),articles.getAuteur()});
+			
+		}
+		
+		
 	}
 }
