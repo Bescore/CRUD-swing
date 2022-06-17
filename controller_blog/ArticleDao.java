@@ -43,7 +43,7 @@ public class ArticleDao implements Idao<Articles> {
 			
 			while ( rs.next()) {
 				
-				Articles article= new Articles(rs.getString("titre"),rs.getString("contenu"),rs.getString("date"), rs.getString("prenom"));
+				Articles article= new Articles(rs.getInt("idarticle"),rs.getString("titre"),rs.getString("contenu"),rs.getString("date"), rs.getString("prenom"));
 				tab_article.add(article);
 			} ;
 			
@@ -64,6 +64,13 @@ public class ArticleDao implements Idao<Articles> {
 
 	@Override
 	public ArrayList<Articles> findby(String email, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<Articles> findycom(int com) {
 		// TODO Auto-generated method stub
 		return null;
 	}

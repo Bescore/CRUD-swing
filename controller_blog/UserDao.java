@@ -119,6 +119,12 @@ public class UserDao implements Idao<User> {
 		return tab_user;
 	}
 	
+	@Override
+	public ArrayList<User> findycom(int com) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	
 	
 

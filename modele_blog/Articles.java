@@ -1,5 +1,7 @@
 package modele_blog;
 
+
+
 public class Articles {
 	private int id;
 	private String titre;
@@ -106,6 +108,21 @@ public class Articles {
 
 	public Articles(String titre, String contenu, String date, String prenom_auteur) {
 		super();
+		this.titre = titre;
+		this.contenu = contenu;
+		this.date = date;
+		this.prenom_auteur = prenom_auteur;
+	}
+
+
+
+	
+
+
+
+	public Articles(int id, String titre, String contenu, String date, String prenom_auteur) {
+		super();
+		this.id = id;
 		this.titre = titre;
 		this.contenu = contenu;
 		this.date = date;
