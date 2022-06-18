@@ -3,17 +3,17 @@ package modele_blog;
 public class commentaires {
 	private int id;
 	private String contenu_com;
-	private String auteur_com;
+	private int auteur_com;
 	
 	
-	public commentaires(int id, String contenu_com, String auteur_com) {
+	public commentaires(int id, String contenu_com, int auteur_com) {
 		super();
 		this.id = id;
 		this.contenu_com = contenu_com;
 		this.auteur_com = auteur_com;
 	}
 	
-	public commentaires( String contenu_com, String auteur_com) {
+	public commentaires( String contenu_com, int auteur_com) {
 		super();
 		this.contenu_com = contenu_com;
 		this.auteur_com = auteur_com;
@@ -35,11 +35,11 @@ public class commentaires {
 		this.contenu_com = contenu_com;
 	}
 
-	public String getAuteur_com() {
+	public int getAuteur_com() {
 		return auteur_com;
 	}
 
-	public void setAuteur_com(String auteur_com) {
+	public void setAuteur_com(int auteur_com) {
 		this.auteur_com = auteur_com;
 	}
 

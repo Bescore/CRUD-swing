@@ -23,7 +23,28 @@ public class commentaireDao implements Idao<commentaires> {
 	@Override
 	public boolean create(commentaires object) {
 		// TODO Auto-generated method stub
-		return false;
+		
+		if (object.getContenu_com().equalsIgnoreCase("")||object.getAuteur_com()<=0) {
+			return false;
+		}else {
+		
+			try {
+				PreparedStatement sql=connect.prepareStatement("INSERT INTO commentaires(commentaire_contenu,auteur_du_commentaire,com_article) VALUES(?,?,?)");
+				
+				sql.setString(1, object.getContenu_com());
+				sql.setInt(2, object.getAuteur_com());
+				sql.setInt(3, object.getId());
+				
+				sql.executeUpdate();
+				System.out.println("l'article a été commenté !");
+				return true;
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e.getMessage());
+			}
+		}
+	
+		return true;
 	}
 	
 	
@@ -52,7 +73,7 @@ public class commentaireDao implements Idao<commentaires> {
 			
 			while ( rs.next()) {
 				
-				commentaires comments= new commentaires(rs.getString("commentaire_contenu"),rs.getString("auteur_du_commentaire"));
+				commentaires comments= new commentaires(rs.getString("commentaire_contenu"),rs.getInt("auteur_du_commentaire"));
 				tab_coms.add(comments);
 			} ;
 			

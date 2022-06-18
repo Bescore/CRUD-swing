@@ -93,6 +93,18 @@ public class Articles {
 	
 
 
+
+
+	public Articles(int id, String titre, String contenu, int auteur) {
+		super();
+		this.id = id;
+		this.titre = titre;
+		this.contenu = contenu;
+		this.auteur = auteur;
+	}
+
+
+
 	public Articles(String titre, String contenu, int auteur) {
 		super();
 		this.titre = titre;

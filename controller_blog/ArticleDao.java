@@ -56,6 +56,46 @@ public class ArticleDao implements Idao<Articles> {
 		return tab_article;
 	}
 
+	
+	
+	public boolean update_article(Articles article) {
+		// TODO Auto-generated method stub
+		
+		
+				try {
+			PreparedStatement sql=connect.prepareStatement("SELECT * FROM article inner join users where article.auteur=users.idusers AND article.auteur=? AND idarticle=? ");
+			
+			sql.setInt(1, article.getAuteur());
+			sql.setInt(2, article.getId());
+			ResultSet rs = sql.executeQuery();
+			
+			if (rs.next()) {
+				System.out.println("user trouvé");
+				try {
+					PreparedStatement sqll=connect.prepareStatement("UPDATE article SET titre=?, contenu=? WHERE idarticle=?");
+					
+					sqll.setString(1, article.getTitre());
+					sqll.setString(2, article.getContenu());
+					sqll.setInt(3, article.getId());
+					
+					sqll.executeUpdate();
+					System.out.println("modification effectué !");
+					return true;
+				} catch (Exception e) {
+					// TODO: handle exception
+					System.out.println(e.getMessage());
+				}
+					
+			}
+			return false;
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+		}
+		
+		return false;
+		
+	}
 	@Override
 	public ArrayList<Articles> readee(Articles object) {
 		// TODO Auto-generated method stub
@@ -75,4 +115,5 @@ public class ArticleDao implements Idao<Articles> {
 		return null;
 	}
 
+	
 }
