@@ -96,6 +96,67 @@ public class ArticleDao implements Idao<Articles> {
 		return false;
 		
 	}
+	
+	
+	public boolean delete(Articles article) {
+		// TODO Auto-generated method stub
+
+		try {
+			PreparedStatement sql=connect.prepareStatement("SELECT * FROM article inner join users where article.auteur=users.idusers AND article.auteur=? AND idarticle=? ");
+			
+			sql.setInt(1, article.getAuteur());
+			sql.setInt(2, article.getId());
+			ResultSet rs = sql.executeQuery();
+			
+			if (rs.next()) {
+				System.out.println("user trouvé");
+				try {
+					PreparedStatement sqll=connect.prepareStatement("DELETE FROM article WHERE idarticle=?");
+					
+					sqll.setInt(1, article.getId());
+					
+					sqll.executeUpdate();
+					System.out.println("Article supprimé !");
+					//utilisation de la méthode de suppression de commentaire
+					delete_associate_coms(article.getId());
+					return true;
+				} catch (Exception e) {
+					// TODO: handle exception
+					System.out.println(e.getMessage());
+				}
+					
+			}
+			return false;
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+		}
+		
+		return false;
+	}
+	
+	
+	public boolean delete_associate_coms(int id_coms) {
+		// TODO Auto-generated method stub
+		
+		
+		
+		try {
+			PreparedStatement sql=connect.prepareStatement("DELETE FROM commentaires  WHERE com_article=?");
+			
+			sql.setInt(1, id_coms);
+			
+			 sql.executeUpdate();
+			 System.out.println("les commentaires associées sont supprimé");
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+		}
+		return false;
+		
+	}
+	
 	@Override
 	public ArrayList<Articles> readee(Articles object) {
 		// TODO Auto-generated method stub

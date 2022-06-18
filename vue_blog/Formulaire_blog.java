@@ -83,6 +83,7 @@ public class Formulaire_blog extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+
 	public Formulaire_blog() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 572, 414);
@@ -99,132 +100,22 @@ public class Formulaire_blog extends JFrame {
 		layeredPane.setBounds(0, 0, 556, 364);
 		panel_2.add(layeredPane);
 
-		panel.setBounds(0, 0, 556, 370);
-		panel.setBackground(new Color(176, 196, 222));
-		panel.setLayout(null);
-		layeredPane.add(panel);
-
-		JLabel lblNewLabel = new JLabel("--Inscription--");
-		lblNewLabel.setBounds(188, 11, 175, 30);
-		lblNewLabel.setFont(new Font("Source Sans Pro Black", Font.BOLD, 23));
-		panel.add(lblNewLabel);
-
-		JLabel lblNom = new JLabel("nom ");
-		lblNom.setBounds(296, 69, 40, 25);
-		panel.add(lblNom);
-
-		JLabel lblPrnom = new JLabel("pr\u00E9nom ");
-		lblPrnom.setBounds(279, 128, 57, 14);
-		panel.add(lblPrnom);
-
-		JLabel lblEmail = new JLabel("email ");
-		lblEmail.setBounds(290, 177, 40, 14);
-		panel.add(lblEmail);
-
-		JLabel lblPassword = new JLabel("password ");
-		lblPassword.setBounds(273, 228, 63, 14);
-		panel.add(lblPassword);
-
-		inp_nom = new JTextField();
-		inp_nom.setBounds(335, 71, 118, 20);
-		panel.add(inp_nom);
-		inp_nom.setColumns(10);
-
-		inp_prenom = new JTextField();
-		inp_prenom.setBounds(335, 125, 118, 20);
-		panel.add(inp_prenom);
-		inp_prenom.setColumns(10);
-
-		inp_email = new JTextField();
-		inp_email.setBounds(335, 174, 118, 20);
-		panel.add(inp_email);
-		inp_email.setColumns(10);
-
-		inp_password = new JPasswordField();
-		inp_password.setBounds(335, 225, 118, 20);
-		panel.add(inp_password);
-
-		JLabel lblNewLabel_5 = new JLabel("Blog");
-		lblNewLabel_5.setForeground(new Color(0, 0, 0));
-		lblNewLabel_5.setBounds(27, 47, 99, 55);
-		lblNewLabel_5.setFont(new Font("Source Sans Pro Black", Font.BOLD, 30));
-		panel.add(lblNewLabel_5);
-		panel.revalidate();
-
-		JButton envoyer = new JButton("s'inscrire");
-		envoyer.setBounds(226, 307, 110, 23);
-		panel.add(envoyer);
-
-		JButton btnNewButton = new JButton("J'ai un compte");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				add_remove(panel_1);
-			}
-		});
-		btnNewButton.setBounds(346, 307, 118, 23);
-		panel.add(btnNewButton);
-
-		envoyer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String nom = inp_nom.getText();
-				String prenom = inp_prenom.getText();
-				String email = inp_email.getText();
-				String password = String.valueOf(inp_password.getPassword());
-				UserDao userDao = new UserDao();
-				User user = new User(nom, prenom, email, password);
-
-				if (userDao.create(user)) {
-					JOptionPane.showMessageDialog(contentPane, "bravo compte crée");
-
-				} else {
-					JOptionPane.showMessageDialog(contentPane, "changez de mail ou remplissez bien les champs !");
-				}
-				;
-
-				add_remove(panel_1);
-			}
-
-		});
-		layeredPane.setLayer(panel_3, 0);
-		panel_3.setAutoscrolls(true);
-		panel_3.setBackground(new Color(176, 196, 222));
-
-		panel_3.setBounds(0, 0, 556, 370);
-		layeredPane.add(panel_3);
-
-		JButton deconnecter_1 = new JButton("Se d\u00E9connecter");
-		deconnecter_1.setBounds(421, 336, 125, 23);
-		deconnecter_1.setFocusable(false);
-		deconnecter_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				add_remove(panel_1);
-				panel_3.removeAll();
-				panel_3.add(deconnecter_1);
-			}
-		});
-		panel_3.setLayout(null);
-		// table.setFillsViewportHeight(true);
-
-		// panel_3.add(table_1);
-
-		panel_3.add(deconnecter_1);
-
 		panel_1.setLayout(null);
-		panel_1.setBackground(new Color(176, 196, 222));
+		panel_1.setBackground(new Color(143, 188, 143));
 		panel_1.setBounds(0, 0, 556, 370);
 		layeredPane.add(panel_1);
 
 		JLabel Title_connexion = new JLabel("--Connexion--");
 		Title_connexion.setForeground(new Color(0, 0, 0));
-		Title_connexion.setFont(new Font("Source Sans Pro Black", Font.BOLD, 23));
-		Title_connexion.setBounds(188, 11, 175, 30);
+		Title_connexion.setFont(new Font("Ravie", Font.BOLD, 26));
+		Title_connexion.setBounds(136, 16, 270, 64);
 		panel_1.add(Title_connexion);
 
-		JLabel lblEmail_1 = new JLabel("email ");
+		JLabel lblEmail_1 = new JLabel("Email ");
 		lblEmail_1.setBounds(291, 177, 35, 14);
 		panel_1.add(lblEmail_1);
 
-		JLabel lblPassword_1 = new JLabel("mot de passe");
+		JLabel lblPassword_1 = new JLabel("Mot de passe");
 		lblPassword_1.setBounds(241, 228, 85, 14);
 		panel_1.add(lblPassword_1);
 
@@ -304,6 +195,7 @@ public class Formulaire_blog extends JFrame {
 					panel_4.add(envoyer_article);
 
 					JButton retour = new JButton("retour");
+					retour.setRolloverEnabled(false);
 					retour.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							panel_3.removeAll();
@@ -367,11 +259,11 @@ public class Formulaire_blog extends JFrame {
 		connexion.setBounds(226, 307, 110, 23);
 		panel_1.add(connexion);
 
-		JLabel lblNewLabel_5_1 = new JLabel("Blog");
+		JLabel lblNewLabel_5_1 = new JLabel("CRUD MANIA");
 		lblNewLabel_5_1.setBackground(new Color(240, 248, 255));
 		lblNewLabel_5_1.setForeground(new Color(0, 0, 0));
-		lblNewLabel_5_1.setFont(new Font("Source Sans Pro Black", Font.BOLD, 30));
-		lblNewLabel_5_1.setBounds(36, 201, 99, 55);
+		lblNewLabel_5_1.setFont(new Font("Ravie", Font.BOLD, 26));
+		lblNewLabel_5_1.setBounds(31, 125, 270, 158);
 		panel_1.add(lblNewLabel_5_1);
 
 		JButton btnNewButton_1 = new JButton("inscription");
@@ -382,177 +274,315 @@ public class Formulaire_blog extends JFrame {
 		});
 		btnNewButton_1.setBounds(346, 307, 118, 23);
 		panel_1.add(btnNewButton_1);
-
-		JLabel lblNewLabel_4 = new JLabel("New label");
-		lblNewLabel_4.setIcon(new ImageIcon(Formulaire_blog.class.getResource("/images/blog.gif")));
-		lblNewLabel_4.setBounds(21, 55, 134, 121);
-		panel_1.add(lblNewLabel_4);
 		id_user.setVisible(false);
 
-		id_user.setBounds(414, 11, 110, 14);
+		id_user.setBounds(436, 26, 110, 14);
 		panel_1.add(id_user);
-																								panel_4.setBackground(SystemColor.activeCaption);
-																								
-																										panel_4.setBounds(0, 0, 556, 370);
-																										layeredPane.add(panel_4);
-																										panel_4.setLayout(null);
-																										
-																												JLabel titre_article = new JLabel("Titre de l'article");
-																												titre_article.setBounds(28, 31, 89, 14);
-																												panel_4.add(titre_article);
-																												
-																														cont_title = new JTextField();
-																														cont_title.setBounds(28, 56, 250, 20);
-																														panel_4.add(cont_title);
-																														cont_title.setColumns(10);
-																														
-																																JLabel contenu_article = new JLabel("Contenu de l'article");
-																																contenu_article.setBounds(28, 107, 152, 14);
-																																panel_4.add(contenu_article);
-																																
-																																		cont_article.setLineWrap(true);
-																																		cont_article.setBounds(28, 132, 250, 127);
-																																		panel_4.add(cont_article);
-																																		panel_5.setBackground(SystemColor.activeCaption);
-																																		
-																																				panel_5.setBounds(0, 0, 556, 370);
-																																				layeredPane.add(panel_5);
-																																				panel_5.setLayout(null);
-																																				commentaires.setForeground(SystemColor.textHighlight);
-																																				commentaires.setSelectedTextColor(Color.BLUE);
-																																				commentaires.setAutoscrolls(false);
-																																				commentaires.setColumns(2);
-																																				commentaires.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-																																				
-																																						commentaires.setEditable(false);
-																																						commentaires.setBackground(Color.LIGHT_GRAY);
-																																						commentaires.setBounds(290, 79, 240, 113);
-																																						panel_5.add(commentaires);
-																																						
-																																								affiche_post.setBounds(10, 146, 243, 188);
-																																								affiche_post.setBackground(Color.LIGHT_GRAY);
-																																								panel_5.add(affiche_post);
-																																								affiche_titre_post.setBounds(10, 79, 243, 28);
-																																								affiche_titre_post.setBackground(Color.LIGHT_GRAY);
-																																								
-																																										affiche_titre_post.setLineWrap(true);
-																																										panel_5.add(affiche_titre_post);
-																																										
-																																												JLabel lblNewLabel_6 = new JLabel("Le fameux show !");
-																																												lblNewLabel_6.setBounds(155, 11, 235, 33);
-																																												lblNewLabel_6.setFont(new Font("Source Code Pro Black", Font.BOLD, 23));
-																																												lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
-																																												panel_5.add(lblNewLabel_6);
-																																												
-																																														JLabel lblNewLabel_7 = new JLabel("commentaires :");
-																																														lblNewLabel_7.setBounds(290, 55, 134, 14);
-																																														lblNewLabel_7.setForeground(SystemColor.window);
-																																														panel_5.add(lblNewLabel_7);
-																																														date_post.setBounds(10, 345, 243, 14);
-																																														date_post.setForeground(SystemColor.window);
-																																														panel_5.add(date_post);
-																																														
-																																																JLabel lblNewLabel_8 = new JLabel("Titre :");
-																																																lblNewLabel_8.setBounds(10, 60, 84, 14);
-																																																lblNewLabel_8.setForeground(SystemColor.textHighlightText);
-																																																panel_5.add(lblNewLabel_8);
-																																																
-																																																		JLabel lblNewLabel_9 = new JLabel("Contenu :");
-																																																		lblNewLabel_9.setBounds(10, 121, 108, 14);
-																																																		lblNewLabel_9.setForeground(SystemColor.textHighlightText);
-																																																		panel_5.add(lblNewLabel_9);
-																																																		/// RETOUR DE LA PAGE SHOW ARTICLE
-																																																		JButton btnNewButton_3 = new JButton("retour");
-																																																		btnNewButton_3.setBounds(441, 312, 89, 23);
-																																																		btnNewButton_3.addActionListener(new ActionListener() {
-																																																			public void actionPerformed(ActionEvent e) {
-																																																				commentaires.setText(null);
-																																																				panel_3.removeAll();
-																																																				UserDao userDao = new UserDao();
 
-																																																				String email = email_connexion.getText();
-																																																				String password = String.valueOf(pass_connexion.getPassword());
-																																																				add_remove(panel_3);
-																																																				JLabel lblNewLabel_1 = new JLabel("Bonjour " + userDao.findby(email, password).get(0).getPrenom());
-																																																				lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
-																																																				lblNewLabel_1.setBounds(25, 34, 124, 14);
-																																																				panel_3.add(lblNewLabel_1);
+		panel.setBounds(0, 0, 556, 370);
+		panel.setBackground(new Color(143, 188, 143));
+		panel.setLayout(null);
+		layeredPane.add(panel);
 
-																																																				JLabel lblNewLabel_2 = new JLabel(
-																																																						"adresse de connexion : " + userDao.findby(email, password).get(0).getEmail() + "");
-																																																				lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 9));
-																																																				lblNewLabel_2.setBounds(10, 345, 395, 14);
-																																																				panel_3.add(lblNewLabel_2);
+		JLabel lblNewLabel = new JLabel("--Inscription--");
+		lblNewLabel.setBounds(138, 11, 288, 30);
+		lblNewLabel.setFont(new Font("Ravie", Font.BOLD, 26));
+		panel.add(lblNewLabel);
 
-																																																				JButton add_article = new JButton("ajouter un article");
-																																																				add_article.addActionListener(new ActionListener() {
-																																																					public void actionPerformed(ActionEvent e) {
-																																																						add_remove(panel_4);
-																																																					}
-																																																				});
+		JLabel lblNom = new JLabel("Nom ");
+		lblNom.setBounds(296, 69, 40, 25);
+		panel.add(lblNom);
 
-																																																				add_article.setFocusable(false);
-																																																				add_article.setBounds(400, 11, 146, 23);
-																																																				panel_3.add(add_article);
+		JLabel lblPrnom = new JLabel("Pr\u00E9nom ");
+		lblPrnom.setBounds(279, 128, 57, 14);
+		panel.add(lblPrnom);
 
-																																																				JButton deconnecter = new JButton("Se d\u00E9connecter");
-																																																				deconnecter.setBounds(421, 336, 125, 23);
-																																																				deconnecter.setFocusable(false);
-																																																				deconnecter.addActionListener(new ActionListener() {
-																																																					public void actionPerformed(ActionEvent e) {
-																																																						add_remove(panel_1);
-																																																						panel_3.removeAll();
-																																																						panel_3.add(deconnecter);
-																																																					}
-																																																				});
-																																																				panel_3.setLayout(null);
-																																																				panel_3.add(deconnecter);
+		JLabel lblEmail = new JLabel("Email ");
+		lblEmail.setBounds(290, 177, 40, 14);
+		panel.add(lblEmail);
 
-																																																				ArticleDao read_articl = new ArticleDao();
-																																																				add_row(read_articl.read());
-																																																				System.out.println(read_articl.read());
-																																																				panel_3.repaint();
-																																																				panel_3.revalidate();
-																																																			}
-																																																		});
-																																																		panel_5.add(btnNewButton_3);
-																																																		
-																																																				text_Area_com.setBounds(290, 217, 240, 55);
-																																																				
-																																																						text_Area_com.setBackground(SystemColor.menu);
-																																																						panel_5.add(text_Area_com);
-																																																						id_post_hidden.setForeground(new Color(255, 255, 255));
-																																																						id_post_hidden.setBackground(new Color(0, 255, 0));
-																																																						id_post_hidden.setBounds(355, 345, 60, 14);
-																																																						panel_5.add(id_post_hidden);
-																																																						
-																																																								JButton update_article = new JButton("modifier article");
-																																																								update_article.addActionListener(new ActionListener() {
-																																																									public void actionPerformed(ActionEvent e) {
-																																																										String titre = affiche_titre_post.getText();
-																																																										String contenu = affiche_post.getText();
-																																																										int id = Integer.valueOf(id_post_hidden.getText());
-																																																										int auteur = Integer.valueOf(id_user.getText());
-																																																										// instancie un nouvelle object article
-																																																										Articles article_mod = new Articles(id, titre, contenu, auteur);
+		JLabel lblPassword = new JLabel("Mot de passe");
+		lblPassword.setBounds(260, 228, 76, 14);
+		panel.add(lblPassword);
 
-																																																										// instancie article dao
-																																																										ArticleDao artDao = new ArticleDao();
-																																																										if (!artDao.update_article(article_mod)) {
-																																																											JOptionPane.showMessageDialog(contentPane,
-																																																													"Vous ne pouvez pas modifier un article que vous n'avez pas créé !");
-																																																										} else {
-																																																											JOptionPane.showMessageDialog(contentPane, "Vous modifiez l'article avec succès !");
-																																																										}
-																																																									}
-																																																								});
-																																																								update_article.setBounds(290, 283, 125, 23);
-																																																								panel_5.add(update_article);
-																																																								
-																																																								JLabel lblNewLabel_3 = new JLabel("ID Article :");
-																																																								lblNewLabel_3.setForeground(new Color(255, 255, 255));
-																																																								lblNewLabel_3.setBounds(290, 345, 60, 14);
-																																																								panel_5.add(lblNewLabel_3);
+		inp_nom = new JTextField();
+		inp_nom.setBounds(335, 71, 118, 20);
+		panel.add(inp_nom);
+		inp_nom.setColumns(10);
+
+		inp_prenom = new JTextField();
+		inp_prenom.setBounds(335, 125, 118, 20);
+		panel.add(inp_prenom);
+		inp_prenom.setColumns(10);
+
+		inp_email = new JTextField();
+		inp_email.setBounds(335, 174, 118, 20);
+		panel.add(inp_email);
+		inp_email.setColumns(10);
+
+		inp_password = new JPasswordField();
+		inp_password.setBounds(335, 225, 118, 20);
+		panel.add(inp_password);
+
+		JLabel lblNewLabel_5 = new JLabel("CRUD MANIA");
+		lblNewLabel_5.setForeground(new Color(0, 0, 0));
+		lblNewLabel_5.setBounds(20, 128, 230, 106);
+		lblNewLabel_5.setFont(new Font("Ravie", Font.BOLD, 26));
+		panel.add(lblNewLabel_5);
+		panel.revalidate();
+
+		JButton envoyer = new JButton("s'inscrire");
+		envoyer.setRolloverEnabled(false);
+		envoyer.setBounds(226, 307, 110, 23);
+		panel.add(envoyer);
+
+		JButton btnNewButton = new JButton("J'ai un compte");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				add_remove(panel_1);
+			}
+		});
+		btnNewButton.setBounds(346, 307, 118, 23);
+		panel.add(btnNewButton);
+
+		envoyer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String nom = inp_nom.getText();
+				String prenom = inp_prenom.getText();
+				String email = inp_email.getText();
+				String password = String.valueOf(inp_password.getPassword());
+				UserDao userDao = new UserDao();
+				User user = new User(nom, prenom, email, password);
+
+				if (userDao.create(user)) {
+					JOptionPane.showMessageDialog(contentPane, "bravo compte crée");
+
+				} else {
+					JOptionPane.showMessageDialog(contentPane, "changez de mail ou remplissez bien les champs !");
+				}
+				;
+
+				add_remove(panel_1);
+			}
+
+		});
+		panel_5.setBackground(new Color(143, 188, 143));
+
+		panel_5.setBounds(0, 0, 556, 370);
+		layeredPane.add(panel_5);
+		panel_5.setLayout(null);
+		commentaires.setForeground(SystemColor.textHighlight);
+		commentaires.setSelectedTextColor(Color.BLUE);
+		commentaires.setAutoscrolls(false);
+		commentaires.setColumns(2);
+		commentaires.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+
+		commentaires.setEditable(false);
+		commentaires.setBackground(Color.LIGHT_GRAY);
+		commentaires.setBounds(290, 79, 240, 113);
+		panel_5.add(commentaires);
+
+		affiche_post.setBounds(10, 146, 243, 188);
+		affiche_post.setBackground(Color.LIGHT_GRAY);
+		panel_5.add(affiche_post);
+		affiche_titre_post.setBounds(10, 79, 243, 28);
+		affiche_titre_post.setBackground(Color.LIGHT_GRAY);
+
+		affiche_titre_post.setLineWrap(true);
+		panel_5.add(affiche_titre_post);
+
+		JLabel lblNewLabel_6 = new JLabel("Le fameux show !");
+		lblNewLabel_6.setBounds(155, 11, 235, 33);
+		lblNewLabel_6.setFont(new Font("Source Code Pro Black", Font.BOLD, 23));
+		lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_5.add(lblNewLabel_6);
+
+		JLabel lblNewLabel_7 = new JLabel("commentaires :");
+		lblNewLabel_7.setBounds(290, 55, 134, 14);
+		lblNewLabel_7.setForeground(SystemColor.window);
+		panel_5.add(lblNewLabel_7);
+		date_post.setBounds(10, 345, 243, 14);
+		date_post.setForeground(SystemColor.window);
+		panel_5.add(date_post);
+
+		JLabel lblNewLabel_8 = new JLabel("Titre :");
+		lblNewLabel_8.setBounds(10, 60, 84, 14);
+		lblNewLabel_8.setForeground(SystemColor.textHighlightText);
+		panel_5.add(lblNewLabel_8);
+
+		JLabel lblNewLabel_9 = new JLabel("Contenu :");
+		lblNewLabel_9.setBounds(10, 121, 108, 14);
+		lblNewLabel_9.setForeground(SystemColor.textHighlightText);
+		panel_5.add(lblNewLabel_9);
+		/// RETOUR DE LA PAGE SHOW ARTICLE
+		JButton btnNewButton_3 = new JButton("retour");
+		btnNewButton_3.setRolloverEnabled(false);
+		btnNewButton_3.setBounds(441, 312, 89, 23);
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				commentaires.setText(null);
+				panel_3.removeAll();
+				UserDao userDao = new UserDao();
+
+				String email = email_connexion.getText();
+				String password = String.valueOf(pass_connexion.getPassword());
+				add_remove(panel_3);
+				JLabel lblNewLabel_1 = new JLabel("Bonjour " + userDao.findby(email, password).get(0).getPrenom());
+				lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+				lblNewLabel_1.setBounds(25, 34, 124, 14);
+				panel_3.add(lblNewLabel_1);
+
+				JLabel lblNewLabel_2 = new JLabel(
+						"adresse de connexion : " + userDao.findby(email, password).get(0).getEmail() + "");
+				lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 9));
+				lblNewLabel_2.setBounds(10, 345, 395, 14);
+				panel_3.add(lblNewLabel_2);
+
+				JButton add_article = new JButton("ajouter un article");
+				add_article.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						add_remove(panel_4);
+					}
+				});
+
+				add_article.setFocusable(false);
+				add_article.setBounds(400, 11, 146, 23);
+				panel_3.add(add_article);
+
+				JButton deconnecter = new JButton("Se d\u00E9connecter");
+				deconnecter.setBounds(421, 336, 125, 23);
+				deconnecter.setFocusable(false);
+				deconnecter.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						add_remove(panel_1);
+						panel_3.removeAll();
+						panel_3.add(deconnecter);
+					}
+				});
+				panel_3.setLayout(null);
+				panel_3.add(deconnecter);
+
+				ArticleDao read_articl = new ArticleDao();
+				add_row(read_articl.read());
+				System.out.println(read_articl.read());
+				panel_3.repaint();
+				panel_3.revalidate();
+			}
+		});
+		panel_5.add(btnNewButton_3);
+
+		text_Area_com.setBounds(290, 217, 240, 55);
+
+		text_Area_com.setBackground(SystemColor.menu);
+		panel_5.add(text_Area_com);
+		id_post_hidden.setForeground(new Color(255, 255, 255));
+		id_post_hidden.setBackground(new Color(0, 255, 0));
+		id_post_hidden.setBounds(355, 345, 60, 14);
+		panel_5.add(id_post_hidden);
+
+		JButton update_article = new JButton("modifier art.");
+		update_article.setRolloverEnabled(false);
+		update_article.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String titre = affiche_titre_post.getText();
+				String contenu = affiche_post.getText();
+				int id = Integer.valueOf(id_post_hidden.getText());
+				int auteur = Integer.valueOf(id_user.getText());
+				// instancie un nouvelle object article
+				Articles article_mod = new Articles(id, titre, contenu, auteur);
+
+				// instancie article dao
+				ArticleDao artDao = new ArticleDao();
+				if (!artDao.update_article(article_mod)) {
+					JOptionPane.showMessageDialog(contentPane,
+							"Vous ne pouvez pas modifier un article que vous n'avez pas créé !");
+				} else {
+					JOptionPane.showMessageDialog(contentPane, "Vous modifiez l'article avec succès !");
+				}
+			}
+		});
+		update_article.setBounds(290, 283, 118, 23);
+		panel_5.add(update_article);
+
+		JLabel lblNewLabel_3 = new JLabel("ID Article :");
+		lblNewLabel_3.setForeground(new Color(255, 255, 255));
+		lblNewLabel_3.setBounds(290, 345, 60, 14);
+		panel_5.add(lblNewLabel_3);
+
+		JButton delete = new JButton("Supprimer");
+		delete.setRolloverEnabled(false);
+		delete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				int auteur_d_action = Integer.valueOf(id_user.getText());
+				int id_article = Integer.valueOf(id_post_hidden.getText());
+				// on instancie un article
+				Articles article = new Articles(id_article, auteur_d_action);
+
+				// on instancie articleDao pour declencher le delete
+				ArticleDao art_dao = new ArticleDao();
+
+				// on declenche le delete
+
+				if (JOptionPane.showConfirmDialog(contentPane, "Voulez vous vraiment supprimer cette article ?", "hop",
+						JOptionPane.YES_NO_OPTION) == 0) {
+					if (!art_dao.delete(article)) {
+						JOptionPane.showMessageDialog(contentPane,
+								"vous ne pouvez pas supprimer cette article car vous ne l'avez pas créé");
+					}
+					;
+				}
+				;
+
+			}
+		});
+		delete.setBounds(418, 283, 112, 23);
+		panel_5.add(delete);
+		layeredPane.setLayer(panel_3, 0);
+		panel_3.setAutoscrolls(true);
+		panel_3.setBackground(new Color(143, 188, 143));
+		panel_3.setBounds(0, 0, 556, 370);
+		layeredPane.add(panel_3);
+
+		JButton deconnecter_1 = new JButton("Se d\u00E9connecter");
+		deconnecter_1.setRolloverEnabled(false);
+		deconnecter_1.setBounds(421, 336, 125, 23);
+		deconnecter_1.setFocusable(false);
+		deconnecter_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				add_remove(panel_1);
+				panel_3.removeAll();
+				panel_3.add(deconnecter_1);
+			}
+		});
+		panel_3.setLayout(null);
+		// table.setFillsViewportHeight(true);
+
+		// panel_3.add(table_1);
+
+		panel_3.add(deconnecter_1);
+		panel_4.setBackground(new Color(143, 188, 143));
+
+		panel_4.setBounds(0, 0, 556, 370);
+		layeredPane.add(panel_4);
+		panel_4.setLayout(null);
+
+		JLabel titre_article = new JLabel("Titre de l'article");
+		titre_article.setBounds(28, 31, 89, 14);
+		panel_4.add(titre_article);
+
+		cont_title = new JTextField();
+		cont_title.setBounds(28, 56, 250, 20);
+		panel_4.add(cont_title);
+		cont_title.setColumns(10);
+
+		JLabel contenu_article = new JLabel("Contenu de l'article");
+		contenu_article.setBounds(28, 107, 152, 14);
+		panel_4.add(contenu_article);
+
+		cont_article.setLineWrap(true);
+		cont_article.setBounds(28, 132, 250, 127);
+		panel_4.add(cont_article);
 
 		/*
 		 * JLabel lblNewLabel_2 = new JLabel("adresse de connexion : ");
@@ -633,6 +663,7 @@ public class Formulaire_blog extends JFrame {
 				///////////////////////////////////////////////////////////////////////////////////////////////////
 
 				JButton btnNewButton_4 = new JButton("Commenter");
+				btnNewButton_4.setRolloverEnabled(false);
 				btnNewButton_4.setBounds(290, 311, 147, 23);
 				btnNewButton_4.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
