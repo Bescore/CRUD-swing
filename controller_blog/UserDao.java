@@ -94,6 +94,7 @@ public class UserDao implements Idao<User> {
 	public ArrayList<User> findby(String email, String password) {
 		// TODO Auto-generated method stub
 		ArrayList<User> tab_user=new ArrayList<User>();
+		
 		try {
 			PreparedStatement sql=connect.prepareStatement("SELECT * FROM users where email= ? AND password=PASSWORD(?) ");
 			

@@ -12,7 +12,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -33,6 +32,8 @@ import controller_blog.UserDao;
 import controller_blog.commentaireDao;
 import modele_blog.Articles;
 import modele_blog.User;
+import javax.swing.ImageIcon;
+import java.awt.event.KeyEvent;
 
 public class Formulaire_blog extends JFrame {
 
@@ -100,6 +101,94 @@ public class Formulaire_blog extends JFrame {
 		layeredPane.setBounds(0, 0, 556, 364);
 		panel_2.add(layeredPane);
 
+		panel.setBounds(0, 0, 556, 370);
+		panel.setBackground(new Color(143, 188, 143));
+		panel.setLayout(null);
+		layeredPane.add(panel);
+
+		JLabel lblNewLabel = new JLabel("--Inscription--");
+		lblNewLabel.setBounds(138, 11, 288, 30);
+		lblNewLabel.setFont(new Font("Ravie", Font.BOLD, 26));
+		panel.add(lblNewLabel);
+
+		JLabel lblNom = new JLabel("Nom ");
+		lblNom.setBounds(296, 69, 40, 25);
+		panel.add(lblNom);
+
+		JLabel lblPrnom = new JLabel("Pr\u00E9nom ");
+		lblPrnom.setBounds(279, 128, 57, 14);
+		panel.add(lblPrnom);
+
+		JLabel lblEmail = new JLabel("Email ");
+		lblEmail.setBounds(290, 177, 40, 14);
+		panel.add(lblEmail);
+
+		JLabel lblPassword = new JLabel("Mot de passe");
+		lblPassword.setBounds(249, 228, 76, 14);
+		panel.add(lblPassword);
+
+		inp_nom = new JTextField();
+		inp_nom.setBounds(335, 71, 118, 20);
+		panel.add(inp_nom);
+		inp_nom.setColumns(10);
+
+		inp_prenom = new JTextField();
+		inp_prenom.setBounds(335, 125, 118, 20);
+		panel.add(inp_prenom);
+		inp_prenom.setColumns(10);
+
+		inp_email = new JTextField();
+		inp_email.setBounds(335, 174, 118, 20);
+		panel.add(inp_email);
+		inp_email.setColumns(10);
+
+		inp_password = new JPasswordField();
+		inp_password.setBounds(335, 225, 118, 20);
+		panel.add(inp_password);
+
+		JLabel lblNewLabel_5 = new JLabel("CRUD MANIA");
+		lblNewLabel_5.setForeground(new Color(0, 0, 0));
+		lblNewLabel_5.setBounds(20, 128, 230, 106);
+		lblNewLabel_5.setFont(new Font("Ravie", Font.BOLD, 26));
+		panel.add(lblNewLabel_5);
+		panel.revalidate();
+
+		JButton envoyer = new JButton("s'inscrire");
+		envoyer.setRolloverEnabled(false);
+		envoyer.setBounds(226, 307, 110, 23);
+		panel.add(envoyer);
+
+		JButton btnNewButton = new JButton("J'ai un compte");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				add_remove(panel_1);
+			}
+		});
+		btnNewButton.setBounds(346, 307, 118, 23);
+		panel.add(btnNewButton);
+
+		envoyer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String nom = inp_nom.getText();
+				String prenom = inp_prenom.getText();
+				String email = inp_email.getText();
+				String password = String.valueOf(inp_password.getPassword());
+				UserDao userDao = new UserDao();
+				User user = new User(nom, prenom, email, password);
+
+				if (userDao.create(user)) {
+					JOptionPane.showMessageDialog(contentPane, "bravo compte crée");
+
+				} else {
+					JOptionPane.showMessageDialog(contentPane, "changez de mail ou remplissez bien les champs !");
+				}
+				;
+
+				add_remove(panel_1);
+			}
+
+		});
+
 		panel_1.setLayout(null);
 		panel_1.setBackground(new Color(143, 188, 143));
 		panel_1.setBounds(0, 0, 556, 370);
@@ -137,14 +226,14 @@ public class Formulaire_blog extends JFrame {
 				UserDao userDao = new UserDao();
 				System.out.println(userDao.findby(email, password));
 
-				// ajouter l'id de l'utilisateur à la page à la page//
-				id_user.setText(String.valueOf(userDao.findby(email, password).get(0).getId()));
 				if (userDao.findby(email, password).size() != 0) {
+					// ajouter l'id de l'utilisateur à la page à la page//
+					id_user.setText(String.valueOf(userDao.findby(email, password).get(0).getId()));
 					JOptionPane.showMessageDialog(contentPane, "vous êtes connecté !");
 					add_remove(panel_3);
 					JLabel lblNewLabel_1 = new JLabel("Bonjour " + userDao.findby(email, password).get(0).getPrenom());
 					lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
-					lblNewLabel_1.setBounds(25, 34, 124, 14);
+					lblNewLabel_1.setBounds(25, 34, 400, 14);
 					panel_3.add(lblNewLabel_1);
 
 					JLabel lblNewLabel_2 = new JLabel(
@@ -205,7 +294,7 @@ public class Formulaire_blog extends JFrame {
 							JLabel lblNewLabel_1 = new JLabel(
 									"Bonjour " + userDao.findby(email, password).get(0).getPrenom());
 							lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
-							lblNewLabel_1.setBounds(25, 34, 124, 14);
+							lblNewLabel_1.setBounds(25, 34, 400, 14);
 							panel_3.add(lblNewLabel_1);
 
 							JLabel lblNewLabel_2 = new JLabel(
@@ -278,94 +367,6 @@ public class Formulaire_blog extends JFrame {
 
 		id_user.setBounds(436, 26, 110, 14);
 		panel_1.add(id_user);
-
-		panel.setBounds(0, 0, 556, 370);
-		panel.setBackground(new Color(143, 188, 143));
-		panel.setLayout(null);
-		layeredPane.add(panel);
-
-		JLabel lblNewLabel = new JLabel("--Inscription--");
-		lblNewLabel.setBounds(138, 11, 288, 30);
-		lblNewLabel.setFont(new Font("Ravie", Font.BOLD, 26));
-		panel.add(lblNewLabel);
-
-		JLabel lblNom = new JLabel("Nom ");
-		lblNom.setBounds(296, 69, 40, 25);
-		panel.add(lblNom);
-
-		JLabel lblPrnom = new JLabel("Pr\u00E9nom ");
-		lblPrnom.setBounds(279, 128, 57, 14);
-		panel.add(lblPrnom);
-
-		JLabel lblEmail = new JLabel("Email ");
-		lblEmail.setBounds(290, 177, 40, 14);
-		panel.add(lblEmail);
-
-		JLabel lblPassword = new JLabel("Mot de passe");
-		lblPassword.setBounds(260, 228, 76, 14);
-		panel.add(lblPassword);
-
-		inp_nom = new JTextField();
-		inp_nom.setBounds(335, 71, 118, 20);
-		panel.add(inp_nom);
-		inp_nom.setColumns(10);
-
-		inp_prenom = new JTextField();
-		inp_prenom.setBounds(335, 125, 118, 20);
-		panel.add(inp_prenom);
-		inp_prenom.setColumns(10);
-
-		inp_email = new JTextField();
-		inp_email.setBounds(335, 174, 118, 20);
-		panel.add(inp_email);
-		inp_email.setColumns(10);
-
-		inp_password = new JPasswordField();
-		inp_password.setBounds(335, 225, 118, 20);
-		panel.add(inp_password);
-
-		JLabel lblNewLabel_5 = new JLabel("CRUD MANIA");
-		lblNewLabel_5.setForeground(new Color(0, 0, 0));
-		lblNewLabel_5.setBounds(20, 128, 230, 106);
-		lblNewLabel_5.setFont(new Font("Ravie", Font.BOLD, 26));
-		panel.add(lblNewLabel_5);
-		panel.revalidate();
-
-		JButton envoyer = new JButton("s'inscrire");
-		envoyer.setRolloverEnabled(false);
-		envoyer.setBounds(226, 307, 110, 23);
-		panel.add(envoyer);
-
-		JButton btnNewButton = new JButton("J'ai un compte");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				add_remove(panel_1);
-			}
-		});
-		btnNewButton.setBounds(346, 307, 118, 23);
-		panel.add(btnNewButton);
-
-		envoyer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String nom = inp_nom.getText();
-				String prenom = inp_prenom.getText();
-				String email = inp_email.getText();
-				String password = String.valueOf(inp_password.getPassword());
-				UserDao userDao = new UserDao();
-				User user = new User(nom, prenom, email, password);
-
-				if (userDao.create(user)) {
-					JOptionPane.showMessageDialog(contentPane, "bravo compte crée");
-
-				} else {
-					JOptionPane.showMessageDialog(contentPane, "changez de mail ou remplissez bien les champs !");
-				}
-				;
-
-				add_remove(panel_1);
-			}
-
-		});
 		panel_5.setBackground(new Color(143, 188, 143));
 
 		panel_5.setBounds(0, 0, 556, 370);
@@ -429,7 +430,7 @@ public class Formulaire_blog extends JFrame {
 				add_remove(panel_3);
 				JLabel lblNewLabel_1 = new JLabel("Bonjour " + userDao.findby(email, password).get(0).getPrenom());
 				lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
-				lblNewLabel_1.setBounds(25, 34, 124, 14);
+				lblNewLabel_1.setBounds(25, 34, 400, 14);
 				panel_3.add(lblNewLabel_1);
 
 				JLabel lblNewLabel_2 = new JLabel(
@@ -561,6 +562,9 @@ public class Formulaire_blog extends JFrame {
 		// panel_3.add(table_1);
 
 		panel_3.add(deconnecter_1);
+		panel_4.setRequestFocusEnabled(false);
+		panel_4.setDoubleBuffered(false);
+		panel_4.setEnabled(false);
 		panel_4.setBackground(new Color(143, 188, 143));
 
 		panel_4.setBounds(0, 0, 556, 370);
