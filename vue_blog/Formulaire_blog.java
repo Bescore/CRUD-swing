@@ -34,6 +34,7 @@ import modele_blog.Articles;
 import modele_blog.User;
 import javax.swing.ImageIcon;
 import java.awt.event.KeyEvent;
+import java.awt.ComponentOrientation;
 
 public class Formulaire_blog extends JFrame {
 
@@ -227,7 +228,7 @@ public class Formulaire_blog extends JFrame {
 				System.out.println(userDao.findby(email, password));
 
 				if (userDao.findby(email, password).size() != 0) {
-					// ajouter l'id de l'utilisateur à la page à la page//
+					// ajouter l'id de l'utilisateur à la page//
 					id_user.setText(String.valueOf(userDao.findby(email, password).get(0).getId()));
 					JOptionPane.showMessageDialog(contentPane, "vous êtes connecté !");
 					add_remove(panel_3);
@@ -250,7 +251,7 @@ public class Formulaire_blog extends JFrame {
 					JButton add_article = new JButton("ajouter un article");
 					add_article.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-
+							cont_title.setVisible(true);
 							add_remove(panel_4);
 
 						}
@@ -367,6 +368,29 @@ public class Formulaire_blog extends JFrame {
 
 		id_user.setBounds(436, 26, 110, 14);
 		panel_1.add(id_user);
+		layeredPane.setLayer(panel_3, 0);
+		panel_3.setAutoscrolls(true);
+		panel_3.setBackground(new Color(143, 188, 143));
+		panel_3.setBounds(0, 0, 556, 370);
+		layeredPane.add(panel_3);
+
+		JButton deconnecter_1 = new JButton("Se d\u00E9connecter");
+		deconnecter_1.setRolloverEnabled(false);
+		deconnecter_1.setBounds(421, 336, 125, 23);
+		deconnecter_1.setFocusable(false);
+		deconnecter_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				add_remove(panel_1);
+				panel_3.removeAll();
+				panel_3.add(deconnecter_1);
+			}
+		});
+		panel_3.setLayout(null);
+		// table.setFillsViewportHeight(true);
+
+		// panel_3.add(table_1);
+
+		panel_3.add(deconnecter_1);
 		panel_5.setBackground(new Color(143, 188, 143));
 
 		panel_5.setBounds(0, 0, 556, 370);
@@ -539,29 +563,6 @@ public class Formulaire_blog extends JFrame {
 		});
 		delete.setBounds(418, 283, 112, 23);
 		panel_5.add(delete);
-		layeredPane.setLayer(panel_3, 0);
-		panel_3.setAutoscrolls(true);
-		panel_3.setBackground(new Color(143, 188, 143));
-		panel_3.setBounds(0, 0, 556, 370);
-		layeredPane.add(panel_3);
-
-		JButton deconnecter_1 = new JButton("Se d\u00E9connecter");
-		deconnecter_1.setRolloverEnabled(false);
-		deconnecter_1.setBounds(421, 336, 125, 23);
-		deconnecter_1.setFocusable(false);
-		deconnecter_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				add_remove(panel_1);
-				panel_3.removeAll();
-				panel_3.add(deconnecter_1);
-			}
-		});
-		panel_3.setLayout(null);
-		// table.setFillsViewportHeight(true);
-
-		// panel_3.add(table_1);
-
-		panel_3.add(deconnecter_1);
 		panel_4.setRequestFocusEnabled(false);
 		panel_4.setDoubleBuffered(false);
 		panel_4.setEnabled(false);
@@ -575,11 +576,6 @@ public class Formulaire_blog extends JFrame {
 		titre_article.setBounds(28, 31, 89, 14);
 		panel_4.add(titre_article);
 
-		cont_title = new JTextField();
-		cont_title.setBounds(28, 56, 250, 20);
-		panel_4.add(cont_title);
-		cont_title.setColumns(10);
-
 		JLabel contenu_article = new JLabel("Contenu de l'article");
 		contenu_article.setBounds(28, 107, 152, 14);
 		panel_4.add(contenu_article);
@@ -588,23 +584,18 @@ public class Formulaire_blog extends JFrame {
 		cont_article.setBounds(28, 132, 250, 127);
 		panel_4.add(cont_article);
 
-		/*
-		 * JLabel lblNewLabel_2 = new JLabel("adresse de connexion : ");
-		 * lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
-		 * lblNewLabel_2.setBounds(10, 345, 395, 14); panel_3.add(lblNewLabel_2);
-		 * 
-		 */
-
-		// SHOW l'article
+		cont_title = new JTextField();
+		cont_title.setBorder(null);
+		cont_title.setVisible(false);
+		cont_title.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+		cont_title.setBounds(28, 56, 250, 20);
+		panel_4.add(cont_title);
+		cont_title.setColumns(10);
 
 	}
 
-	// fonction de changement de panels
 	public void add_remove(JPanel pane) {
 		layeredPane.removeAll();
-		// pane.setVisible(false);
-		// JLabel lblNewLabel_8 = new JLabel("ayayaya");
-		// pane.add(lblNewLabel_8);
 		layeredPane.add(pane);
 		pane.repaint();
 		pane.revalidate();
@@ -638,17 +629,12 @@ public class Formulaire_blog extends JFrame {
 		}
 
 		table_1.addMouseListener((MouseListener) new MouseAdapter() {
+
 			public void mouseClicked(MouseEvent e) {
 				int row = table_1.getSelectedRow();
 				int col = table_1.getSelectedColumn();
 
 				commentaireDao com = new commentaireDao();
-
-				// System.out.println(com.findycom((int)
-				// model_table_1.getDataVector().get(row).get(0)).get(0).getContenu_com());
-				// System.out.println(com.findycom((int)
-				// model_table_1.getDataVector().get(row).get(0)));
-				// System.out.println( model_table_1.getDataVector().get(row).get(0));
 
 				// ajouter l'id du post à la page(caché pour l'utilisateur)//
 				id_post_hidden.setText(String.valueOf(model_table_1.getDataVector().get(row).get(0)));
@@ -673,6 +659,7 @@ public class Formulaire_blog extends JFrame {
 					public void actionPerformed(ActionEvent e) {
 						int id_articles = Integer.valueOf(id_post_hidden.getText());
 						int id_userss = Integer.valueOf(id_user.getText());
+
 						String contenu_com = text_Area_com.getText();
 						// création de nouveau commentaire
 						modele_blog.commentaires com = new modele_blog.commentaires(id_articles, contenu_com,
@@ -682,11 +669,13 @@ public class Formulaire_blog extends JFrame {
 						commentaireDao com_dao = new commentaireDao();
 
 						com_dao.create(com);
+						// vider le champ commentaire
 						text_Area_com.setText("");
 						int val = Integer.valueOf(id_post_hidden.getText());
 						commentaireDao comm = new commentaireDao();
-						commentaires.append("- "
-								+ comm.findycom(val).get(comm.findycom(val).size() - 1).getContenu_com() + " -" + "\n");
+						commentaires.append("" + comm.findycom(val).get(comm.findycom(val).size() - 1).getNom_auteur()
+								+ " dit : " + comm.findycom(val).get(comm.findycom(val).size() - 1).getContenu_com()
+								+ " " + "\n");
 						// System.out.println(comm.findycom(val));
 						// System.out.println(comm.findycom(val).get(comm.findycom(val).size()-1).getContenu_com());
 					}

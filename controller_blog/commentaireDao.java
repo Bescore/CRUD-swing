@@ -47,25 +47,12 @@ public class commentaireDao implements Idao<commentaires> {
 		return true;
 	}
 	
-	
-	@Override
-	public ArrayList<commentaires> findby(String email, String password) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
-	@Override
-	public ArrayList<commentaires> readee(commentaires object) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	@Override
 	public ArrayList<commentaires> findycom(int com) {
 		// TODO Auto-generated method stub
 		ArrayList<commentaires> tab_coms=new ArrayList<commentaires>();
 		try {
-			PreparedStatement sql=connect.prepareStatement("SELECT * FROM commentaires INNER JOIN article ON article.idarticle=commentaires.com_article AND article.idarticle=? ");
+			PreparedStatement sql=connect.prepareStatement("SELECT * FROM commentaires INNER JOIN article ON article.idarticle=commentaires.com_article INNER JOIN users ON commentaires.auteur_du_commentaire=users.idusers AND article.idarticle=?");
 			
 			sql.setInt(1, com);
 			ResultSet rs = sql.executeQuery();
@@ -73,7 +60,7 @@ public class commentaireDao implements Idao<commentaires> {
 			
 			while ( rs.next()) {
 				
-				commentaires comments= new commentaires(rs.getString("commentaire_contenu"),rs.getInt("auteur_du_commentaire"));
+				commentaires comments= new commentaires(rs.getString("commentaire_contenu"),rs.getInt("auteur_du_commentaire"),rs.getString("prenom"));
 				tab_coms.add(comments);
 			} ;
 			
@@ -88,6 +75,17 @@ public class commentaireDao implements Idao<commentaires> {
 		
 	}
 	
-
+	@Override
+	public ArrayList<commentaires> findby(String email, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	@Override
+	public ArrayList<commentaires> readee(commentaires object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
