@@ -5,16 +5,15 @@ public class commentaires {
 	private String contenu_com;
 	private int auteur_com;
 	private String nom_auteur;
-	
-	
+
 	public commentaires(int id, String contenu_com, int auteur_com) {
 		super();
 		this.id = id;
 		this.contenu_com = contenu_com;
 		this.auteur_com = auteur_com;
 	}
-	
-	public commentaires( String contenu_com, int auteur_com) {
+
+	public commentaires(String contenu_com, int auteur_com) {
 		super();
 		this.contenu_com = contenu_com;
 		this.auteur_com = auteur_com;
@@ -24,7 +23,7 @@ public class commentaires {
 		// TODO Auto-generated constructor stub
 		this.contenu_com = contenu_com;
 		this.auteur_com = auteur_com;
-		this.nom_auteur=nom_auteur;
+		this.nom_auteur = nom_auteur;
 	}
 
 	public int getId() {
@@ -53,7 +52,8 @@ public class commentaires {
 
 	@Override
 	public String toString() {
-		return "commentaires [id=" + id + ", contenu_com=" + contenu_com + ", auteur_com=" + auteur_com + ", nom_auteur=" + nom_auteur +"]";
+		return "commentaires [id=" + id + ", contenu_com=" + contenu_com + ", auteur_com=" + auteur_com
+				+ ", nom_auteur=" + nom_auteur + "]";
 	}
 
 	public String getNom_auteur() {
@@ -63,6 +63,5 @@ public class commentaires {
 	public void setNom_auteur(String nom_auteur) {
 		this.nom_auteur = nom_auteur;
 	}
-	
-	
+
 }

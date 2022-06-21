@@ -35,6 +35,8 @@ import modele_blog.User;
 import javax.swing.ImageIcon;
 import java.awt.event.KeyEvent;
 import java.awt.ComponentOrientation;
+import java.awt.Dimension;
+import javax.swing.DropMode;
 
 public class Formulaire_blog extends JFrame {
 
@@ -69,13 +71,12 @@ public class Formulaire_blog extends JFrame {
 	JLabel date_post = new JLabel("Date");
 	JLabel id_user = new JLabel("id_user_non_visible");
 	JLabel id_post_hidden = new JLabel("id_post_hidden");
-
+	JTextArea affiche_titre_post = new JTextArea();
 	JTextArea text_Area_com = new JTextArea();
 	JTextArea commentaires = new JTextArea();
 	JTextArea affiche_post = new JTextArea();
 	JTextArea cont_article = new JTextArea();
 
-	JTextArea affiche_titre_post = new JTextArea();
 	private JTextField email_connexion;
 	private JPasswordField pass_connexion;
 	// private JTable table;
@@ -396,24 +397,13 @@ public class Formulaire_blog extends JFrame {
 		panel_5.setBounds(0, 0, 556, 370);
 		layeredPane.add(panel_5);
 		panel_5.setLayout(null);
-		commentaires.setForeground(SystemColor.textHighlight);
-		commentaires.setSelectedTextColor(Color.BLUE);
-		commentaires.setAutoscrolls(false);
-		commentaires.setColumns(2);
-		commentaires.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		affiche_post.setLineWrap(true);
+		// scrollPanel.add(commentaires);
+		// panel_5.add(commentaires);
 
-		commentaires.setEditable(false);
-		commentaires.setBackground(Color.LIGHT_GRAY);
-		commentaires.setBounds(290, 79, 240, 113);
-		panel_5.add(commentaires);
-
-		affiche_post.setBounds(10, 146, 243, 188);
+		affiche_post.setBounds(36, 50, 241, -205);
 		affiche_post.setBackground(Color.LIGHT_GRAY);
 		panel_5.add(affiche_post);
-		affiche_titre_post.setBounds(10, 79, 243, 28);
-		affiche_titre_post.setBackground(Color.LIGHT_GRAY);
-
-		affiche_titre_post.setLineWrap(true);
 		panel_5.add(affiche_titre_post);
 
 		JLabel lblNewLabel_6 = new JLabel("Le fameux show !");
@@ -466,6 +456,7 @@ public class Formulaire_blog extends JFrame {
 				JButton add_article = new JButton("ajouter un article");
 				add_article.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						affiche_titre_post.setVisible(true);
 						add_remove(panel_4);
 					}
 				});
@@ -556,6 +547,7 @@ public class Formulaire_blog extends JFrame {
 								"vous ne pouvez pas supprimer cette article car vous ne l'avez pas créé");
 					}
 					;
+
 				}
 				;
 
@@ -563,6 +555,25 @@ public class Formulaire_blog extends JFrame {
 		});
 		delete.setBounds(418, 283, 112, 23);
 		panel_5.add(delete);
+		commentaires.setBackground(Color.LIGHT_GRAY);
+		commentaires.setEditable(false);
+		commentaires.setForeground(SystemColor.textHighlight);
+		commentaires.setSelectedTextColor(Color.BLUE);
+		commentaires.setColumns(2);
+		commentaires.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		commentaires.setBounds(0, 0, 240, 127);
+		// commentaires.setBounds(290, 79, 240, 113);
+
+		JScrollPane scrollPanel = new JScrollPane(commentaires);
+		scrollPanel.setBounds(290, 79, 240, 127);
+		panel_5.add(scrollPanel);
+		affiche_titre_post.setLineWrap(true);
+		affiche_titre_post.setBounds(10, 77, 243, 33);
+		affiche_titre_post.setBackground(Color.LIGHT_GRAY);
+
+		JScrollPane scrollPanel_contenu = new JScrollPane(affiche_post);
+		scrollPanel_contenu.setBounds(10, 146, 243, 126);
+		panel_5.add(scrollPanel_contenu);
 		panel_4.setRequestFocusEnabled(false);
 		panel_4.setDoubleBuffered(false);
 		panel_4.setEnabled(false);
@@ -641,9 +652,11 @@ public class Formulaire_blog extends JFrame {
 
 				//// A REVOIR////
 				for (int i = 0; i < com.findycom((int) model_table_1.getDataVector().get(row).get(0)).size(); i++) {
-					commentaires.append("- "
+					commentaires.append(""
+							+ com.findycom((int) model_table_1.getDataVector().get(row).get(0)).get(i).getNom_auteur()
+							+ " dit : "
 							+ com.findycom((int) model_table_1.getDataVector().get(row).get(0)).get(i).getContenu_com()
-							+ "- " + "\n");
+							+ "\n");
 				}
 				affiche_titre_post.setText((String) model_table_1.getDataVector().get(row).get(1));
 				affiche_post.setText((String) (model_table_1.getDataVector().get(row).get(2)));
