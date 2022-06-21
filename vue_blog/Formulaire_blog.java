@@ -68,6 +68,7 @@ public class Formulaire_blog extends JFrame {
 	JPanel panel_3 = new JPanel();
 	JPanel panel_4 = new JPanel();
 	JPanel panel_5 = new JPanel();
+	JLabel image_blog = new JLabel("");
 	JLabel date_post = new JLabel("Date");
 	JLabel id_user = new JLabel("id_user_non_visible");
 	JLabel id_post_hidden = new JLabel("id_post_hidden");
@@ -81,7 +82,7 @@ public class Formulaire_blog extends JFrame {
 	private JPasswordField pass_connexion;
 	// private JTable table;
 	private JTable table_1;
-	private JTextField cont_title;
+	private JTextArea cont_title;
 
 	/**
 	 * Create the frame.
@@ -241,7 +242,7 @@ public class Formulaire_blog extends JFrame {
 					JLabel lblNewLabel_2 = new JLabel(
 							"adresse de connexion : " + userDao.findby(email, password).get(0).getEmail() + "");
 					lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 9));
-					lblNewLabel_2.setBounds(10, 345, 395, 14);
+					lblNewLabel_2.setBounds(290, 34, 400, 14);
 					panel_3.add(lblNewLabel_2);
 					// metre string data ici
 
@@ -253,12 +254,12 @@ public class Formulaire_blog extends JFrame {
 					add_article.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							cont_title.setVisible(true);
+							image_blog.setVisible(true);
 							add_remove(panel_4);
-
 						}
 					});
 					add_article.setFocusable(false);
-					add_article.setBounds(400, 11, 146, 23);
+					add_article.setBounds(270, 336, 146, 23);
 					panel_3.add(add_article);
 
 					JButton envoyer_article = new JButton("Envoyer l'article");
@@ -302,7 +303,7 @@ public class Formulaire_blog extends JFrame {
 							JLabel lblNewLabel_2 = new JLabel(
 									"adresse de connexion : " + userDao.findby(email, password).get(0).getEmail() + "");
 							lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 9));
-							lblNewLabel_2.setBounds(10, 345, 395, 14);
+							lblNewLabel_2.setBounds(290, 34, 400, 14);
 							panel_3.add(lblNewLabel_2);
 
 							JButton add_article = new JButton("ajouter un article");
@@ -314,7 +315,7 @@ public class Formulaire_blog extends JFrame {
 							});
 
 							add_article.setFocusable(false);
-							add_article.setBounds(400, 11, 146, 23);
+							add_article.setBounds(270, 336, 146, 23);
 							panel_3.add(add_article);
 
 							JButton deconnecter = new JButton("Se d\u00E9connecter");
@@ -369,29 +370,6 @@ public class Formulaire_blog extends JFrame {
 
 		id_user.setBounds(436, 26, 110, 14);
 		panel_1.add(id_user);
-		layeredPane.setLayer(panel_3, 0);
-		panel_3.setAutoscrolls(true);
-		panel_3.setBackground(new Color(143, 188, 143));
-		panel_3.setBounds(0, 0, 556, 370);
-		layeredPane.add(panel_3);
-
-		JButton deconnecter_1 = new JButton("Se d\u00E9connecter");
-		deconnecter_1.setRolloverEnabled(false);
-		deconnecter_1.setBounds(421, 336, 125, 23);
-		deconnecter_1.setFocusable(false);
-		deconnecter_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				add_remove(panel_1);
-				panel_3.removeAll();
-				panel_3.add(deconnecter_1);
-			}
-		});
-		panel_3.setLayout(null);
-		// table.setFillsViewportHeight(true);
-
-		// panel_3.add(table_1);
-
-		panel_3.add(deconnecter_1);
 		panel_5.setBackground(new Color(143, 188, 143));
 
 		panel_5.setBounds(0, 0, 556, 370);
@@ -401,10 +379,10 @@ public class Formulaire_blog extends JFrame {
 		// scrollPanel.add(commentaires);
 		// panel_5.add(commentaires);
 
-		affiche_post.setBounds(36, 50, 241, -205);
+		affiche_post.setBounds(10, -14, 41, 124);
 		affiche_post.setBackground(Color.LIGHT_GRAY);
 		panel_5.add(affiche_post);
-		panel_5.add(affiche_titre_post);
+		// panel_5.add(affiche_titre_post);
 
 		JLabel lblNewLabel_6 = new JLabel("Le fameux show !");
 		lblNewLabel_6.setBounds(155, 11, 235, 33);
@@ -450,7 +428,7 @@ public class Formulaire_blog extends JFrame {
 				JLabel lblNewLabel_2 = new JLabel(
 						"adresse de connexion : " + userDao.findby(email, password).get(0).getEmail() + "");
 				lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 9));
-				lblNewLabel_2.setBounds(10, 345, 395, 14);
+				lblNewLabel_2.setBounds(290, 34, 400, 14);
 				panel_3.add(lblNewLabel_2);
 
 				JButton add_article = new JButton("ajouter un article");
@@ -462,7 +440,7 @@ public class Formulaire_blog extends JFrame {
 				});
 
 				add_article.setFocusable(false);
-				add_article.setBounds(400, 11, 146, 23);
+				add_article.setBounds(270, 336, 146, 23);
 				panel_3.add(add_article);
 
 				JButton deconnecter = new JButton("Se d\u00E9connecter");
@@ -486,11 +464,7 @@ public class Formulaire_blog extends JFrame {
 			}
 		});
 		panel_5.add(btnNewButton_3);
-
-		text_Area_com.setBounds(290, 217, 240, 55);
-
-		text_Area_com.setBackground(SystemColor.menu);
-		panel_5.add(text_Area_com);
+		// panel_5.add(text_Area_com);
 		id_post_hidden.setForeground(new Color(255, 255, 255));
 		id_post_hidden.setBackground(new Color(0, 255, 0));
 		id_post_hidden.setBounds(355, 345, 60, 14);
@@ -555,6 +529,7 @@ public class Formulaire_blog extends JFrame {
 		});
 		delete.setBounds(418, 283, 112, 23);
 		panel_5.add(delete);
+		commentaires.setLineWrap(true);
 		commentaires.setBackground(Color.LIGHT_GRAY);
 		commentaires.setEditable(false);
 		commentaires.setForeground(SystemColor.textHighlight);
@@ -570,10 +545,47 @@ public class Formulaire_blog extends JFrame {
 		affiche_titre_post.setLineWrap(true);
 		affiche_titre_post.setBounds(10, 77, 243, 33);
 		affiche_titre_post.setBackground(Color.LIGHT_GRAY);
+		text_Area_com.setLineWrap(true);
+
+		text_Area_com.setBounds(0, 0, 240, 55);
+
+		text_Area_com.setBackground(SystemColor.menu);
+
+		JScrollPane scrollPane_ecrire_commentaire = new JScrollPane(text_Area_com);
+		scrollPane_ecrire_commentaire.setAutoscrolls(true);
+		scrollPane_ecrire_commentaire.setBounds(290, 217, 240, 55);
+		panel_5.add(scrollPane_ecrire_commentaire);
 
 		JScrollPane scrollPanel_contenu = new JScrollPane(affiche_post);
 		scrollPanel_contenu.setBounds(10, 146, 243, 126);
 		panel_5.add(scrollPanel_contenu);
+
+		JScrollPane scrollPane_titre_post = new JScrollPane(affiche_titre_post);
+		scrollPane_titre_post.setBounds(10, 77, 243, 33);
+		panel_5.add(scrollPane_titre_post);
+		layeredPane.setLayer(panel_3, 0);
+		panel_3.setAutoscrolls(true);
+		panel_3.setBackground(new Color(143, 188, 143));
+		panel_3.setBounds(0, 0, 556, 370);
+		layeredPane.add(panel_3);
+
+		JButton deconnecter_1 = new JButton("Se d\u00E9connecter");
+		deconnecter_1.setRolloverEnabled(false);
+		deconnecter_1.setBounds(421, 336, 125, 23);
+		deconnecter_1.setFocusable(false);
+		deconnecter_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				add_remove(panel_1);
+				panel_3.removeAll();
+				panel_3.add(deconnecter_1);
+			}
+		});
+		panel_3.setLayout(null);
+		// table.setFillsViewportHeight(true);
+
+		// panel_3.add(table_1);
+
+		panel_3.add(deconnecter_1);
 		panel_4.setRequestFocusEnabled(false);
 		panel_4.setDoubleBuffered(false);
 		panel_4.setEnabled(false);
@@ -593,15 +605,30 @@ public class Formulaire_blog extends JFrame {
 
 		cont_article.setLineWrap(true);
 		cont_article.setBounds(28, 132, 250, 127);
-		panel_4.add(cont_article);
 
-		cont_title = new JTextField();
-		cont_title.setBorder(null);
+		cont_title = new JTextArea();
 		cont_title.setVisible(false);
+		cont_title.setLineWrap(true);
+		cont_title.setBorder(null);
 		cont_title.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		cont_title.setBounds(28, 56, 250, 20);
-		panel_4.add(cont_title);
 		cont_title.setColumns(10);
+
+		JScrollPane scrollPane_titre_panel_4 = new JScrollPane(cont_title);
+		scrollPane_titre_panel_4.setBounds(28, 56, 250, 29);
+		panel_4.add(scrollPane_titre_panel_4);
+
+		JScrollPane scrollPane_contenu_panel_4 = new JScrollPane(cont_article);
+		scrollPane_contenu_panel_4.setBounds(28, 132, 250, 159);
+		panel_4.add(scrollPane_contenu_panel_4);
+
+		image_blog.setVisible(false);
+		image_blog.setIcon(new ImageIcon(Formulaire_blog.class.getResource("/images/blog.gif")));
+		image_blog.setBounds(353, 31, 208, 213);
+
+		JScrollPane scrollPane_image_panel_4 = new JScrollPane(image_blog);
+		scrollPane_image_panel_4.setBounds(309, 64, 203, 203);
+		panel_4.add(scrollPane_image_panel_4);
 
 	}
 
