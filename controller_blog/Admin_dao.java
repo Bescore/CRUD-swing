@@ -84,4 +84,38 @@ public class Admin_dao {
 		}
 		return tab;
 	}
+	
+	public boolean delete_user(int iduser) {
+		
+		try {
+			PreparedStatement sqll = connect.prepareStatement("DELETE FROM users WHERE idusers=?");
+
+			sqll.setInt(1, iduser);
+
+			sqll.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+		}
+		try {
+			PreparedStatement sqll = connect.prepareStatement("DELETE FROM article WHERE auteur=?");
+
+			sqll.setInt(1, iduser);
+
+			sqll.executeUpdate();
+			System.out.println("user supprimé");
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+		}
+		
+		return false;
+		
+	}
+	
+	
+	
+	
 }

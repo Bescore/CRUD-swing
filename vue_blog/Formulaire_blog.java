@@ -65,11 +65,16 @@ public class Formulaire_blog extends JFrame {
 	JPanel panel_3 = new JPanel();
 	JPanel panel_4 = new JPanel();
 	JPanel panel_5 = new JPanel();
+	JPanel panel_6 = new JPanel();
+	JPanel panel_7 = new JPanel();
 	JLabel image_blog = new JLabel("");
 	JLabel date_post = new JLabel("Date");
 	JLabel id_user = new JLabel("id_user_non_visible");
 	JLabel isAdmin = new JLabel("isAdmin_non_visible");
 	JLabel id_post_hidden = new JLabel("id_post_hidden");
+	JLabel id_admin_user = new JLabel("id_admin_user");
+	JLabel nom_admin_user = new JLabel("nom_admin_user");
+	JLabel prenom_admin_user = new JLabel("prenom_admin_user");
 	JTextArea affiche_titre_post = new JTextArea();
 	JTextArea text_Area_com = new JTextArea();
 	JTextArea commentaires = new JTextArea();
@@ -190,6 +195,292 @@ public class Formulaire_blog extends JFrame {
 			}
 
 		});
+
+		panel_1.setLayout(null);
+		panel_1.setBackground(new Color(143, 188, 143));
+		panel_1.setBounds(0, 0, 556, 370);
+		layeredPane.add(panel_1);
+
+		JLabel Title_connexion = new JLabel("--Connexion--");
+		Title_connexion.setForeground(new Color(0, 0, 0));
+		Title_connexion.setFont(new Font("Ravie", Font.BOLD, 26));
+		Title_connexion.setBounds(136, 16, 270, 64);
+		panel_1.add(Title_connexion);
+
+		JLabel lblEmail_1 = new JLabel("Email ");
+		lblEmail_1.setBounds(291, 177, 35, 14);
+		panel_1.add(lblEmail_1);
+
+		JLabel lblPassword_1 = new JLabel("Mot de passe");
+		lblPassword_1.setBounds(241, 228, 85, 14);
+		panel_1.add(lblPassword_1);
+
+		email_connexion = new JTextField();
+		email_connexion.setColumns(10);
+		email_connexion.setBounds(335, 174, 118, 20);
+		panel_1.add(email_connexion);
+
+		pass_connexion = new JPasswordField();
+		pass_connexion.setBounds(335, 225, 118, 20);
+		panel_1.add(pass_connexion);
+
+		JButton connexion = new JButton("connexion");
+		connexion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String email = email_connexion.getText();
+				String password = String.valueOf(pass_connexion.getPassword());
+				UserDao userDao = new UserDao();
+				System.out.println(userDao.findby(email, password));
+
+				if (userDao.findby(email, password).size() != 0) {
+					// ajouter l'id de l'utilisateur à la page//
+					id_user.setText(String.valueOf(userDao.findby(email, password).get(0).getId()));
+					isAdmin.setText(String.valueOf(userDao.findby(email, password).get(0).getIsAdmin()));
+					JOptionPane.showMessageDialog(contentPane, "vous êtes connecté !");
+					add_remove(panel_3);
+					JLabel lblNewLabel_1 = new JLabel("Bonjour " + userDao.findby(email, password).get(0).getPrenom());
+					lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+					lblNewLabel_1.setBounds(25, 34, 400, 14);
+					panel_3.add(lblNewLabel_1);
+
+					JLabel lblNewLabel_2 = new JLabel(
+							"adresse de connexion : " + userDao.findby(email, password).get(0).getEmail() + "");
+					lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 9));
+					lblNewLabel_2.setBounds(290, 34, 400, 14);
+					panel_3.add(lblNewLabel_2);
+					// metre string data ici
+
+					// trouver les articles
+					ArticleDao read_article = new ArticleDao();
+					add_row(read_article.read());
+
+					// gerer user
+					if (isAdmin.getText().equalsIgnoreCase("1")) {
+						JButton gerer_user = new JButton("G\u00E9rer les utilisateurs");
+						gerer_user.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								DefaultTableModel dtm = (DefaultTableModel) table_users.getModel();
+								dtm.setRowCount(0);
+								// generer le tableau des users
+								Admin_dao admin_dao = new Admin_dao();
+								// System.out.println(admin_dao.Admin_user_Read());
+
+								// on ajoute dynamiquement chaque ligne avec un foreach
+								(admin_dao.Admin_user_Read()).forEach(element ->
+
+								dtm.addRow(new Object[] { element.getId(), element.getNom(), element.getPrenom(),
+										element.getEmail(), element.getPassword(), element.getIsAdmin() }));
+
+								add_remove(panel_6);
+							}
+						});
+						gerer_user.setBounds(10, 336, 193, 23);
+						panel_3.add(gerer_user);
+
+					}
+
+					JButton add_article = new JButton("ajouter un article");
+					add_article.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							cont_title.setVisible(true);
+							image_blog.setVisible(true);
+							add_remove(panel_4);
+						}
+					});
+					add_article.setFocusable(false);
+					add_article.setBounds(270, 336, 146, 23);
+					panel_3.add(add_article);
+
+					JButton envoyer_article = new JButton("Envoyer l'article");
+					envoyer_article.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							String email = email_connexion.getText();
+							String password = String.valueOf(pass_connexion.getPassword());
+							UserDao userDao = new UserDao();
+							String titre = cont_title.getText();
+							String contenu = cont_article.getText();
+							System.out.println(userDao.findby(email, password).get(0).getId());
+
+							Articles article = new Articles(titre, contenu,
+									userDao.findby(email, password).get(0).getId());
+							ArticleDao crud = new ArticleDao();
+							if (crud.create(article)) {
+								JOptionPane.showMessageDialog(contentPane, "votre article a été ajouté !");
+								titre = null;
+								contenu = null;
+							}
+							;
+						}
+					});
+					envoyer_article.setBounds(70, 299, 158, 23);
+					panel_4.add(envoyer_article);
+
+					JButton retour = new JButton("retour");
+					retour.setRolloverEnabled(false);
+					retour.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							panel_3.removeAll();
+							String email = email_connexion.getText();
+							String password = String.valueOf(pass_connexion.getPassword());
+							add_remove(panel_3);
+							JLabel lblNewLabel_1 = new JLabel(
+									"Bonjour " + userDao.findby(email, password).get(0).getPrenom());
+							lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+							lblNewLabel_1.setBounds(25, 34, 400, 14);
+							panel_3.add(lblNewLabel_1);
+
+							JLabel lblNewLabel_2 = new JLabel(
+									"adresse de connexion : " + userDao.findby(email, password).get(0).getEmail() + "");
+							lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 9));
+							lblNewLabel_2.setBounds(290, 34, 400, 14);
+							panel_3.add(lblNewLabel_2);
+
+							JButton add_article = new JButton("ajouter un article");
+							add_article.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent e) {
+									add_remove(panel_4);
+
+								}
+							});
+
+							add_article.setFocusable(false);
+							add_article.setBounds(270, 336, 146, 23);
+							panel_3.add(add_article);
+
+							JButton deconnecter = new JButton("Se d\u00E9connecter");
+							deconnecter.setBounds(421, 336, 125, 23);
+							deconnecter.setFocusable(false);
+							deconnecter.addActionListener(new ActionListener() {
+								public void actionPerformed(ActionEvent e) {
+									add_remove(panel_1);
+									panel_3.removeAll();
+									panel_3.add(deconnecter);
+								}
+							});
+							panel_3.setLayout(null);
+							panel_3.add(deconnecter);
+
+							// retrouver les articles
+							ArticleDao read_articl = new ArticleDao();
+							add_row(read_articl.read());
+							System.out.println(read_articl.read());
+							panel_3.repaint();
+							panel_3.revalidate();
+
+							// gerer user
+							if (isAdmin.getText().equalsIgnoreCase("1")) {
+								JButton gerer_user = new JButton("G\u00E9rer les utilisateurs");
+								gerer_user.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent e) {
+										add_remove(panel_6);
+									}
+								});
+								gerer_user.setBounds(10, 336, 193, 23);
+								panel_3.add(gerer_user);
+							}
+
+						}
+					});
+
+					retour.setBounds(382, 299, 89, 23);
+					panel_4.add(retour);
+				} else {
+					JOptionPane.showMessageDialog(contentPane, "compte inexistant ou mauvais mot de passe");
+				}
+			}
+		});
+		connexion.setBounds(226, 307, 110, 23);
+		panel_1.add(connexion);
+
+		JLabel lblNewLabel_5_1 = new JLabel("CRUD MANIA");
+		lblNewLabel_5_1.setBackground(new Color(240, 248, 255));
+		lblNewLabel_5_1.setForeground(new Color(0, 0, 0));
+		lblNewLabel_5_1.setFont(new Font("Ravie", Font.BOLD, 26));
+		lblNewLabel_5_1.setBounds(31, 125, 270, 158);
+		panel_1.add(lblNewLabel_5_1);
+
+		JButton btnNewButton_1 = new JButton("inscription");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				add_remove(panel);
+			}
+		});
+		btnNewButton_1.setBounds(346, 307, 118, 23);
+		panel_1.add(btnNewButton_1);
+		id_user.setVisible(false);
+
+		id_user.setBounds(436, 26, 110, 14);
+		panel_1.add(id_user);
+		isAdmin.setVisible(false);
+
+		isAdmin.setBounds(10, 26, 103, 14);
+		panel_1.add(isAdmin);
+		layeredPane.setLayer(panel_3, 0);
+		panel_3.setAutoscrolls(true);
+		panel_3.setBackground(new Color(143, 188, 143));
+		panel_3.setBounds(0, 0, 556, 370);
+		layeredPane.add(panel_3);
+
+		JButton deconnecter_1 = new JButton("Se d\u00E9connecter");
+		deconnecter_1.setRolloverEnabled(false);
+		deconnecter_1.setBounds(421, 336, 125, 23);
+		deconnecter_1.setFocusable(false);
+		deconnecter_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				add_remove(panel_1);
+				panel_3.removeAll();
+				panel_3.add(deconnecter_1);
+			}
+		});
+		panel_3.setLayout(null);
+		// table.setFillsViewportHeight(true);
+
+		// panel_3.add(table_1);
+
+		panel_3.add(deconnecter_1);
+		panel_4.setRequestFocusEnabled(false);
+		panel_4.setDoubleBuffered(false);
+		panel_4.setEnabled(false);
+		panel_4.setBackground(new Color(143, 188, 143));
+
+		panel_4.setBounds(0, 0, 556, 370);
+		layeredPane.add(panel_4);
+		panel_4.setLayout(null);
+
+		JLabel titre_article = new JLabel("Titre de l'article");
+		titre_article.setBounds(28, 31, 89, 14);
+		panel_4.add(titre_article);
+
+		JLabel contenu_article = new JLabel("Contenu de l'article");
+		contenu_article.setBounds(28, 107, 152, 14);
+		panel_4.add(contenu_article);
+
+		cont_article.setLineWrap(true);
+		cont_article.setBounds(28, 132, 250, 127);
+
+		cont_title = new JTextArea();
+		cont_title.setVisible(false);
+		cont_title.setLineWrap(true);
+		cont_title.setBorder(null);
+		cont_title.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+		cont_title.setBounds(28, 56, 250, 20);
+		cont_title.setColumns(10);
+
+		JScrollPane scrollPane_titre_panel_4 = new JScrollPane(cont_title);
+		scrollPane_titre_panel_4.setBounds(28, 56, 250, 29);
+		panel_4.add(scrollPane_titre_panel_4);
+
+		JScrollPane scrollPane_contenu_panel_4 = new JScrollPane(cont_article);
+		scrollPane_contenu_panel_4.setBounds(28, 132, 250, 159);
+		panel_4.add(scrollPane_contenu_panel_4);
+
+		image_blog.setVisible(false);
+		image_blog.setIcon(new ImageIcon(Formulaire_blog.class.getResource("/images/blog.gif")));
+		image_blog.setBounds(353, 31, 208, 213);
+
+		JScrollPane scrollPane_image_panel_4 = new JScrollPane(image_blog);
+		scrollPane_image_panel_4.setBounds(309, 64, 203, 203);
+		panel_4.add(scrollPane_image_panel_4);
 		panel_5.setBackground(new Color(143, 188, 143));
 
 		panel_5.setBounds(0, 0, 556, 370);
@@ -281,17 +572,18 @@ public class Formulaire_blog extends JFrame {
 				System.out.println(read_articl.read());
 				panel_3.repaint();
 				panel_3.revalidate();
-				
-				
-				JButton gerer_user = new JButton("G\u00E9rer les utilisateurs");
-				gerer_user.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						
-						
-					}
-				});
-				gerer_user.setBounds(10, 336, 193, 23);
-				panel_3.add(gerer_user);
+
+				// gerer user
+				if (isAdmin.getText().equalsIgnoreCase("1")) {
+					JButton gerer_user = new JButton("G\u00E9rer les utilisateurs");
+					gerer_user.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							add_remove(panel_6);
+						}
+					});
+					gerer_user.setBounds(10, 336, 193, 23);
+					panel_3.add(gerer_user);
+				}
 			}
 		});
 		panel_5.add(btnNewButton_3);
@@ -414,301 +706,134 @@ public class Formulaire_blog extends JFrame {
 		JScrollPane scrollPane_titre_post = new JScrollPane(affiche_titre_post);
 		scrollPane_titre_post.setBounds(10, 77, 243, 33);
 		panel_5.add(scrollPane_titre_post);
-		panel_4.setRequestFocusEnabled(false);
-		panel_4.setDoubleBuffered(false);
-		panel_4.setEnabled(false);
-		panel_4.setBackground(new Color(143, 188, 143));
 
-		panel_4.setBounds(0, 0, 556, 370);
-		layeredPane.add(panel_4);
-		panel_4.setLayout(null);
+		panel_6.setBackground(SystemColor.activeCaption);
+		panel_6.setBounds(0, 0, 556, 370);
+		layeredPane.add(panel_6);
+		panel_6.setLayout(null);
 
-		JLabel titre_article = new JLabel("Titre de l'article");
-		titre_article.setBounds(28, 31, 89, 14);
-		panel_4.add(titre_article);
+		table_users = new JTable();
+		table_users.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "ID", "Nom", "Prenom", "Email", "Password", "Admin ?" }));
+		table_users.getColumnModel().getColumn(0).setPreferredWidth(78);
+		table_users.getColumnModel().getColumn(1).setPreferredWidth(98);
+		table_users.getColumnModel().getColumn(2).setPreferredWidth(121);
+		table_users.getColumnModel().getColumn(3).setPreferredWidth(134);
+		table_users.getColumnModel().getColumn(4).setPreferredWidth(92);
+		table_users.getColumnModel().getColumn(5).setPreferredWidth(101);
+		table_users.setBounds(433, 241, -347, -182);
 
-		JLabel contenu_article = new JLabel("Contenu de l'article");
-		contenu_article.setBounds(28, 107, 152, 14);
-		panel_4.add(contenu_article);
+		DefaultTableModel model_table_user = (DefaultTableModel) table_users.getModel();
+		table_users.setRowHeight(30);
 
-		cont_article.setLineWrap(true);
-		cont_article.setBounds(28, 132, 250, 127);
+		// mouse click event sur les ligne du tableau des users
+		table_users.addMouseListener((MouseListener) new MouseAdapter() {
 
-		cont_title = new JTextArea();
-		cont_title.setVisible(false);
-		cont_title.setLineWrap(true);
-		cont_title.setBorder(null);
-		cont_title.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
-		cont_title.setBounds(28, 56, 250, 20);
-		cont_title.setColumns(10);
+			public void mouseClicked(MouseEvent e) {
+				int row = table_users.getSelectedRow();
+				int col = table_users.getSelectedColumn();
 
-		JScrollPane scrollPane_titre_panel_4 = new JScrollPane(cont_title);
-		scrollPane_titre_panel_4.setBounds(28, 56, 250, 29);
-		panel_4.add(scrollPane_titre_panel_4);
+				id_admin_user.setText(String.valueOf(model_table_user.getDataVector().get(row).get(0)));
+				nom_admin_user.setText((String) model_table_user.getDataVector().get(row).get(1));
+				prenom_admin_user.setText((String) model_table_user.getDataVector().get(row).get(2));
+				add_remove(panel_7);
 
-		JScrollPane scrollPane_contenu_panel_4 = new JScrollPane(cont_article);
-		scrollPane_contenu_panel_4.setBounds(28, 132, 250, 159);
-		panel_4.add(scrollPane_contenu_panel_4);
-
-		image_blog.setVisible(false);
-		image_blog.setIcon(new ImageIcon(Formulaire_blog.class.getResource("/images/blog.gif")));
-		image_blog.setBounds(353, 31, 208, 213);
-
-		JScrollPane scrollPane_image_panel_4 = new JScrollPane(image_blog);
-		scrollPane_image_panel_4.setBounds(309, 64, 203, 203);
-		panel_4.add(scrollPane_image_panel_4);
-
-		panel_1.setLayout(null);
-		panel_1.setBackground(new Color(143, 188, 143));
-		panel_1.setBounds(0, 0, 556, 370);
-		layeredPane.add(panel_1);
-
-		JLabel Title_connexion = new JLabel("--Connexion--");
-		Title_connexion.setForeground(new Color(0, 0, 0));
-		Title_connexion.setFont(new Font("Ravie", Font.BOLD, 26));
-		Title_connexion.setBounds(136, 16, 270, 64);
-		panel_1.add(Title_connexion);
-
-		JLabel lblEmail_1 = new JLabel("Email ");
-		lblEmail_1.setBounds(291, 177, 35, 14);
-		panel_1.add(lblEmail_1);
-
-		JLabel lblPassword_1 = new JLabel("Mot de passe");
-		lblPassword_1.setBounds(241, 228, 85, 14);
-		panel_1.add(lblPassword_1);
-
-		email_connexion = new JTextField();
-		email_connexion.setColumns(10);
-		email_connexion.setBounds(335, 174, 118, 20);
-		panel_1.add(email_connexion);
-
-		pass_connexion = new JPasswordField();
-		pass_connexion.setBounds(335, 225, 118, 20);
-		panel_1.add(pass_connexion);
-
-		JButton connexion = new JButton("connexion");
-		connexion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String email = email_connexion.getText();
-				String password = String.valueOf(pass_connexion.getPassword());
-				UserDao userDao = new UserDao();
-				System.out.println(userDao.findby(email, password));
-
-				if (userDao.findby(email, password).size() != 0) {
-					// ajouter l'id de l'utilisateur à la page//
-					id_user.setText(String.valueOf(userDao.findby(email, password).get(0).getId()));
-					isAdmin.setText(String.valueOf(userDao.findby(email, password).get(0).getIsAdmin()));
-					JOptionPane.showMessageDialog(contentPane, "vous êtes connecté !");
-					add_remove(panel_3);
-					JLabel lblNewLabel_1 = new JLabel("Bonjour " + userDao.findby(email, password).get(0).getPrenom());
-					lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
-					lblNewLabel_1.setBounds(25, 34, 400, 14);
-					panel_3.add(lblNewLabel_1);
-
-					JLabel lblNewLabel_2 = new JLabel(
-							"adresse de connexion : " + userDao.findby(email, password).get(0).getEmail() + "");
-					lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 9));
-					lblNewLabel_2.setBounds(290, 34, 400, 14);
-					panel_3.add(lblNewLabel_2);
-					// metre string data ici
-
-					// trouver les articles
-					ArticleDao read_article = new ArticleDao();
-					add_row(read_article.read());
-
-					JButton add_article = new JButton("ajouter un article");
-					add_article.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							cont_title.setVisible(true);
-							image_blog.setVisible(true);
-							add_remove(panel_4);
-						}
-					});
-					add_article.setFocusable(false);
-					add_article.setBounds(270, 336, 146, 23);
-					panel_3.add(add_article);
-
-					JButton envoyer_article = new JButton("Envoyer l'article");
-					envoyer_article.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							String email = email_connexion.getText();
-							String password = String.valueOf(pass_connexion.getPassword());
-							UserDao userDao = new UserDao();
-							String titre = cont_title.getText();
-							String contenu = cont_article.getText();
-							System.out.println(userDao.findby(email, password).get(0).getId());
-
-							Articles article = new Articles(titre, contenu,
-									userDao.findby(email, password).get(0).getId());
-							ArticleDao crud = new ArticleDao();
-							if (crud.create(article)) {
-								JOptionPane.showMessageDialog(contentPane, "votre article a été ajouté !");
-								titre = null;
-								contenu = null;
-							}
-							;
-						}
-					});
-					envoyer_article.setBounds(70, 299, 158, 23);
-					panel_4.add(envoyer_article);
-
-					JButton retour = new JButton("retour");
-					retour.setRolloverEnabled(false);
-					retour.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							panel_3.removeAll();
-							String email = email_connexion.getText();
-							String password = String.valueOf(pass_connexion.getPassword());
-							add_remove(panel_3);
-							JLabel lblNewLabel_1 = new JLabel(
-									"Bonjour " + userDao.findby(email, password).get(0).getPrenom());
-							lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
-							lblNewLabel_1.setBounds(25, 34, 400, 14);
-							panel_3.add(lblNewLabel_1);
-
-							JLabel lblNewLabel_2 = new JLabel(
-									"adresse de connexion : " + userDao.findby(email, password).get(0).getEmail() + "");
-							lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 9));
-							lblNewLabel_2.setBounds(290, 34, 400, 14);
-							panel_3.add(lblNewLabel_2);
-							
-							JButton gerer_user = new JButton("G\u00E9rer les utilisateurs");
-							gerer_user.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent e) {
-									
-									
-								}
-							});
-							gerer_user.setBounds(10, 336, 193, 23);
-							panel_3.add(gerer_user);
-
-							JButton add_article = new JButton("ajouter un article");
-							add_article.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent e) {
-									add_remove(panel_4);
-									
-									
-								}
-							});
-
-							add_article.setFocusable(false);
-							add_article.setBounds(270, 336, 146, 23);
-							panel_3.add(add_article);
-
-							JButton deconnecter = new JButton("Se d\u00E9connecter");
-							deconnecter.setBounds(421, 336, 125, 23);
-							deconnecter.setFocusable(false);
-							deconnecter.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent e) {
-									add_remove(panel_1);
-									panel_3.removeAll();
-									panel_3.add(deconnecter);
-								}
-							});
-							panel_3.setLayout(null);
-							panel_3.add(deconnecter);
-
-							// retrouver les articles
-							ArticleDao read_articl = new ArticleDao();
-							add_row(read_articl.read());
-							System.out.println(read_articl.read());
-							panel_3.repaint();
-							panel_3.revalidate();
-
-						}
-					});
-
-					retour.setBounds(382, 299, 89, 23);
-					panel_4.add(retour);
-				} else {
-					JOptionPane.showMessageDialog(contentPane, "compte inexistant ou mauvais mot de passe");
-				}
+				System.out.println(model_table_user.getDataVector().get(row));
 			}
 		});
-		connexion.setBounds(226, 307, 110, 23);
-		panel_1.add(connexion);
 
-		JLabel lblNewLabel_5_1 = new JLabel("CRUD MANIA");
-		lblNewLabel_5_1.setBackground(new Color(240, 248, 255));
-		lblNewLabel_5_1.setForeground(new Color(0, 0, 0));
-		lblNewLabel_5_1.setFont(new Font("Ravie", Font.BOLD, 26));
-		lblNewLabel_5_1.setBounds(31, 125, 270, 158);
-		panel_1.add(lblNewLabel_5_1);
+		JScrollPane scrollPane_users = new JScrollPane(table_users);
+		scrollPane_users.setBounds(21, 58, 512, 231);
+		panel_6.add(scrollPane_users);
 
-		JButton btnNewButton_1 = new JButton("inscription");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton btnNewButton_2 = new JButton("retour");
+		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				add_remove(panel);
+				add_remove(panel_3);
 			}
 		});
-		btnNewButton_1.setBounds(346, 307, 118, 23);
-		panel_1.add(btnNewButton_1);
-		id_user.setVisible(false);
+		btnNewButton_2.setBounds(419, 319, 89, 23);
+		panel_6.add(btnNewButton_2);
 
-		id_user.setBounds(436, 26, 110, 14);
-		panel_1.add(id_user);
-		isAdmin.setVisible(false);
+		panel_7.setBackground(SystemColor.activeCaption);
+		panel_7.setBounds(0, 0, 556, 370);
+		layeredPane.add(panel_7);
+		panel_7.setLayout(null);
 
-		isAdmin.setBounds(10, 26, 103, 14);
-		panel_1.add(isAdmin);
-		layeredPane.setLayer(panel_3, 0);
-		panel_3.setAutoscrolls(true);
-		panel_3.setBackground(new Color(143, 188, 143));
-		panel_3.setBounds(0, 0, 556, 370);
-		layeredPane.add(panel_3);
-		
-				JButton deconnecter_1 = new JButton("Se d\u00E9connecter");
-				deconnecter_1.setRolloverEnabled(false);
-				deconnecter_1.setBounds(421, 336, 125, 23);
-				deconnecter_1.setFocusable(false);
-				deconnecter_1.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						add_remove(panel_1);
-						panel_3.removeAll();
-						panel_3.add(deconnecter_1);
-					}
-				});
-				panel_3.setLayout(null);
-				// table.setFillsViewportHeight(true);
+		id_admin_user.setBounds(30, 11, 77, 23);
+		panel_7.add(id_admin_user);
 
-				// panel_3.add(table_1);
+		nom_admin_user.setBounds(30, 107, 90, 23);
+		panel_7.add(nom_admin_user);
 
-				panel_3.add(deconnecter_1);
-				
-				JButton gerer_user = new JButton("G\u00E9rer les utilisateurs");
-				gerer_user.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						
-						
-					}
-				});
-				gerer_user.setBounds(10, 336, 193, 23);
-				panel_3.add(gerer_user);
-				
-				JPanel panel_6 = new JPanel();
-				panel_6.setBackground(SystemColor.activeCaption);
-				panel_6.setBounds(0, 0, 556, 370);
-				layeredPane.add(panel_6);
-				panel_6.setLayout(null);
-				
-				table_users = new JTable();
-				table_users.setModel(new DefaultTableModel(
-					new Object[][] {
-						{null, null, null, null},
-					},
-					new String[] {
-						"ID", "Nom", "Prenom", "Email"
-					}
-				));
-				table_users.getColumnModel().getColumn(1).setPreferredWidth(145);
-				table_users.getColumnModel().getColumn(2).setPreferredWidth(145);
-				table_users.getColumnModel().getColumn(3).setPreferredWidth(145);
-				table_users.setBounds(433, 241, -347, -182);
-				
-				
-				JScrollPane scrollPane_users = new JScrollPane(table_users);
-				scrollPane_users.setBounds(21, 58, 512, 236);
-				panel_6.add(scrollPane_users);
+		prenom_admin_user.setBounds(266, 107, 119, 23);
+		panel_7.add(prenom_admin_user);
+
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(30, 177, 192, 22);
+		panel_7.add(textArea);
+
+		JTextArea textArea_1 = new JTextArea();
+		textArea_1.setBounds(266, 177, 182, 22);
+		panel_7.add(textArea_1);
+
+		JButton btnNewButton_5 = new JButton("Valider les changements");
+		btnNewButton_5.setBounds(30, 238, 192, 23);
+		panel_7.add(btnNewButton_5);
+
+		JButton btnNewButton_6 = new JButton("Supprimer l'utilisateur");
+		btnNewButton_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int id_user_a_supprimer = Integer.valueOf(id_admin_user.getText());
+				Admin_dao admin_dao = new Admin_dao();
+				admin_dao.delete_user(id_user_a_supprimer);
+
+				DefaultTableModel dtm = (DefaultTableModel) table_users.getModel();
+				dtm.setRowCount(0);
+				// generer le tableau des users
+
+				// System.out.println(admin_dao.Admin_user_Read());
+
+				// on ajoute dynamiquement chaque ligne avec un foreach
+				(admin_dao.Admin_user_Read()).forEach(element ->
+
+				dtm.addRow(new Object[] { element.getId(), element.getNom(), element.getPrenom(), element.getEmail(),
+						element.getPassword(), element.getIsAdmin() }));
+
+				add_remove(panel_6);
+			}
+		});
+		btnNewButton_6.setBounds(266, 238, 182, 23);
+		panel_7.add(btnNewButton_6);
+
+		JLabel lblNewLabel_12 = new JLabel("Changer nom :");
+		lblNewLabel_12.setBounds(30, 156, 90, 14);
+		panel_7.add(lblNewLabel_12);
+
+		JLabel lblNewLabel_13 = new JLabel("Changer pr\u00E9nom :");
+		lblNewLabel_13.setBounds(266, 156, 119, 14);
+		panel_7.add(lblNewLabel_13);
+
+		JButton btnNewButton_7 = new JButton("retour");
+		btnNewButton_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Admin_dao admin_dao = new Admin_dao();
+				DefaultTableModel dtm = (DefaultTableModel) table_users.getModel();
+				dtm.setRowCount(0);
+				// generer le tableau des users
+
+				// System.out.println(admin_dao.Admin_user_Read());
+
+				// on ajoute dynamiquement chaque ligne avec un foreach
+				(admin_dao.Admin_user_Read()).forEach(element ->
+
+				dtm.addRow(new Object[] { element.getId(), element.getNom(), element.getPrenom(), element.getEmail(),
+						element.getPassword(), element.getIsAdmin() }));
+				add_remove(panel_6);
+			}
+		});
+		btnNewButton_7.setBounds(436, 309, 89, 23);
+		panel_7.add(btnNewButton_7);
 
 	}
 
@@ -718,6 +843,8 @@ public class Formulaire_blog extends JFrame {
 		pane.repaint();
 		pane.revalidate();
 	}
+	// add_remove prenant un objet user en paramètre , c'est du best practice, bien
+	// reverifier cette façon de fair
 
 	// fonction read des articles dans le tableau
 	public void add_row(ArrayList<Articles> Article) {
