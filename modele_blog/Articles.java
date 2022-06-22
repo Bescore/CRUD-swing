@@ -17,6 +17,13 @@ public class Articles {
 
 
 
+	public Articles(int id) {
+		super();
+		this.id = id;
+	}
+
+
+
 	public void setId(int id) {
 		this.id = id;
 	}

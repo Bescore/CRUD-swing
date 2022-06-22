@@ -109,7 +109,7 @@ public class UserDao implements Idao<User> {
 
 			if (rs.next()) {
 				User user = new User(rs.getInt("idusers"), rs.getString("nom"), rs.getString("prenom"),
-						rs.getString("email"), rs.getString("password"));
+						rs.getString("email"), rs.getString("password"),rs.getInt("isAdmin"));
 				tab_user.add(user);
 				// return tab_user;
 

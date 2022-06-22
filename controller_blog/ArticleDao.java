@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import dao.Connections;
 import dao.Idao;
 import modele_blog.Articles;
-import modele_blog.User;
 
 public class ArticleDao implements Idao<Articles> {
 	Connection connect = new Connections().getConnection();

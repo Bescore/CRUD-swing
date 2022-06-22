@@ -6,8 +6,20 @@ public class User {
 	private String prenom;
 	private String email;
 	private String password;
+	private int isAdmin;
 	
 	
+	public User(int id, String nom, String prenom, String email, String password,int admin) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.password = password;
+		this.isAdmin=admin;
+	}
+
+
 	public User(int id, String nom, String prenom, String email, String password) {
 		super();
 		this.id = id;
@@ -16,7 +28,6 @@ public class User {
 		this.email = email;
 		this.password = password;
 	}
-
 
 	public User(String nom, String prenom, String email, String password) {
 		super();
@@ -76,7 +87,17 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", zmail=" + email + ", password=" + password
-				+ "]";
+				+ ", isAdmin= "+isAdmin+"]";
+	}
+
+
+	public int getIsAdmin() {
+		return isAdmin;
+	}
+
+
+	public void setIsAdmin(int isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 	
 }
