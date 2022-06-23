@@ -79,7 +79,6 @@ public class ArticleDao implements Idao<Articles> {
 					sqll.setInt(3, article.getId());
 
 					sqll.executeUpdate();
-					System.out.println("modification effectué !");
 					return true;
 				} catch (Exception e) {
 					// TODO: handle exception
@@ -116,7 +115,6 @@ public class ArticleDao implements Idao<Articles> {
 					sqll.setInt(1, article.getId());
 
 					sqll.executeUpdate();
-					System.out.println("Article supprimé !");
 					// utilisation de la méthode de suppression de commentaire
 					delete_associate_coms(article.getId());
 					return true;

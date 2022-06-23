@@ -131,8 +131,6 @@ public class Articles {
 
 	
 
-
-
 	public Articles(String titre, String contenu, String date, String prenom_auteur) {
 		super();
 		this.titre = titre;

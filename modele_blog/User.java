@@ -9,6 +9,8 @@ public class User {
 	private int isAdmin;
 	
 	
+	
+	
 	public User(int id, String nom, String prenom, String email, String password,int admin) {
 		super();
 		this.id = id;

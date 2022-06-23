@@ -31,7 +31,6 @@ public class Admin_dao {
 			sqll.setInt(1, article.getId());
 
 			sqll.executeUpdate();
-			System.out.println("Suppression article et commentaire  par un administrateur");
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -52,7 +51,6 @@ public class Admin_dao {
 			sql.setString(2, article.getContenu());
 			sql.setInt(3, article.getId());
 			sql.executeUpdate();
-			System.out.println("modification administrateur");
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -116,6 +114,22 @@ public class Admin_dao {
 	}
 	
 	
-	
-	
+	public boolean update_user(String nom,String prenom,int isAdmin, int iduser) {
+		try {
+			PreparedStatement sqll = connect.prepareStatement("UPDATE users SET nom=?,prenom=?,isAdmin=? WHERE idusers=?");
+			
+			sqll.setString(1,nom);
+			sqll.setString(2,prenom);
+			sqll.setInt(3, isAdmin);
+			sqll.setInt(4, iduser);
+
+			sqll.executeUpdate();
+			
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+		}
+		return false;
+	}
 }
