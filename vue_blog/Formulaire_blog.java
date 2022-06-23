@@ -696,81 +696,6 @@ public class Formulaire_blog extends JFrame {
 		JScrollPane scrollPane_image_panel_4 = new JScrollPane(image_blog);
 		scrollPane_image_panel_4.setBounds(309, 64, 203, 203);
 		panel_4.add(scrollPane_image_panel_4);
-		layeredPane.setLayer(panel_3, 0);
-		panel_3.setAutoscrolls(true);
-		panel_3.setBackground(new Color(143, 188, 143));
-		panel_3.setBounds(0, 0, 556, 370);
-		layeredPane.add(panel_3);
-
-		JButton deconnecter_1 = new JButton("Se d\u00E9connecter");
-		deconnecter_1.setBorder(UIManager.getBorder("CheckBox.border"));
-		deconnecter_1.setRolloverEnabled(false);
-		deconnecter_1.setBounds(421, 336, 125, 23);
-		deconnecter_1.setFocusable(false);
-		deconnecter_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				add_remove(panel_1);
-				panel_3.removeAll();
-				panel_3.add(deconnecter_1);
-			}
-		});
-		panel_3.setLayout(null);
-		// table.setFillsViewportHeight(true);
-
-		// panel_3.add(table_1);
-
-		panel_3.add(deconnecter_1);
-
-		panel_6.setBackground(new Color(143, 188, 143));
-		panel_6.setBounds(0, 0, 556, 370);
-		layeredPane.add(panel_6);
-		panel_6.setLayout(null);
-
-		table_users = new JTable();
-		table_users.setBackground(Color.GREEN);
-		table_users.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "ID", "Nom", "Prenom", "Email", "Password", "Admin ?" }));
-		table_users.getColumnModel().getColumn(0).setPreferredWidth(78);
-		table_users.getColumnModel().getColumn(1).setPreferredWidth(98);
-		table_users.getColumnModel().getColumn(2).setPreferredWidth(121);
-		table_users.getColumnModel().getColumn(3).setPreferredWidth(134);
-		table_users.getColumnModel().getColumn(4).setPreferredWidth(92);
-		table_users.getColumnModel().getColumn(5).setPreferredWidth(101);
-		table_users.setBounds(433, 241, -347, -182);
-
-		DefaultTableModel model_table_user = (DefaultTableModel) table_users.getModel();
-		table_users.setRowHeight(30);
-
-		// mouse click event sur les ligne du tableau des users
-		table_users.addMouseListener((MouseListener) new MouseAdapter() {
-
-			public void mouseClicked(MouseEvent e) {
-				int row = table_users.getSelectedRow();
-
-				id_admin_user.setText(String.valueOf(model_table_user.getDataVector().get(row).get(0)));
-				changer_nom_user.setText((String) model_table_user.getDataVector().get(row).get(1));
-				changer_prenom_user.setText((String) model_table_user.getDataVector().get(row).get(2));
-				input_becoming_admin.setText(String.valueOf(model_table_user.getDataVector().get(row).get(5)));
-
-				add_remove(panel_7);
-
-				System.out.println(model_table_user.getDataVector().get(row));
-			}
-		});
-
-		JScrollPane scrollPane_users = new JScrollPane(table_users);
-		scrollPane_users.setBounds(21, 58, 512, 231);
-		panel_6.add(scrollPane_users);
-
-		JButton btnNewButton_2 = new JButton("retour");
-		btnNewButton_2.setRolloverEnabled(false);
-		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				add_remove(panel_3);
-			}
-		});
-		btnNewButton_2.setBounds(419, 319, 89, 23);
-		panel_6.add(btnNewButton_2);
 
 		panel_7.setBackground(new Color(143, 188, 143));
 		panel_7.setBounds(0, 0, 556, 370);
@@ -867,6 +792,90 @@ public class Formulaire_blog extends JFrame {
 		JLabel lblNewLabel_10 = new JLabel("0 = non  1 = oui");
 		lblNewLabel_10.setBounds(456, 210, 90, 14);
 		panel_7.add(lblNewLabel_10);
+		layeredPane.setLayer(panel_3, 0);
+		panel_3.setAutoscrolls(true);
+		panel_3.setBackground(new Color(143, 188, 143));
+		panel_3.setBounds(0, 0, 556, 370);
+		layeredPane.add(panel_3);
+
+		JButton deconnecter_1 = new JButton("Se d\u00E9connecter");
+		deconnecter_1.setRolloverEnabled(false);
+		deconnecter_1.setBounds(421, 336, 125, 23);
+		deconnecter_1.setFocusable(false);
+		deconnecter_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				add_remove(panel_1);
+				panel_3.removeAll();
+				panel_3.add(deconnecter_1);
+			}
+		});
+		panel_3.setLayout(null);
+		// table.setFillsViewportHeight(true);
+
+		// panel_3.add(table_1);
+
+		panel_3.add(deconnecter_1);
+
+		panel_6.setBackground(new Color(143, 188, 143));
+		panel_6.setBounds(0, 0, 556, 370);
+		layeredPane.add(panel_6);
+		panel_6.setLayout(null);
+
+		table_users = new JTable();
+		table_users.setBackground(Color.GREEN);
+		table_users.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "ID", "Nom", "Prenom", "Email", "Password", "Admin ?" }));
+		table_users.getColumnModel().getColumn(0).setPreferredWidth(78);
+		table_users.getColumnModel().getColumn(1).setPreferredWidth(98);
+		table_users.getColumnModel().getColumn(2).setPreferredWidth(121);
+		table_users.getColumnModel().getColumn(3).setPreferredWidth(134);
+		table_users.getColumnModel().getColumn(4).setPreferredWidth(92);
+		table_users.getColumnModel().getColumn(5).setPreferredWidth(101);
+		table_users.setBounds(433, 241, -347, -182);
+
+		DefaultTableModel model_table_user = (DefaultTableModel) table_users.getModel();
+		table_users.setRowHeight(30);
+
+		// mouse click event sur les ligne du tableau des users
+		table_users.addMouseListener((MouseListener) new MouseAdapter() {
+
+			public void mouseClicked(MouseEvent e) {
+				int row = table_users.getSelectedRow();
+
+				id_admin_user.setText(String.valueOf(model_table_user.getDataVector().get(row).get(0)));
+				changer_nom_user.setText((String) model_table_user.getDataVector().get(row).get(1));
+				changer_prenom_user.setText((String) model_table_user.getDataVector().get(row).get(2));
+				input_becoming_admin.setText(String.valueOf(model_table_user.getDataVector().get(row).get(5)));
+
+				add_remove(panel_7);
+
+				System.out.println(model_table_user.getDataVector().get(row));
+			}
+		});
+
+		JScrollPane scrollPane_users = new JScrollPane(table_users);
+		scrollPane_users.setBounds(21, 58, 512, 231);
+		panel_6.add(scrollPane_users);
+
+		JButton retour_to_art_list = new JButton("retour");
+		retour_to_art_list.setRolloverEnabled(false);
+		retour_to_art_list.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				DefaultTableModel model_table_1 = (DefaultTableModel) table_1.getModel();
+				model_table_1.setRowCount(0);
+				ArticleDao read_articl = new ArticleDao();
+
+				(read_articl.read()).forEach(element -> model_table_1.addRow(new Object[] { element.getId(),
+						element.getTitre(), element.getContenu(), element.getDate(), element.getPrenom_auteur() }));
+
+				add_remove(panel_3);
+
+
+			}
+		});
+		retour_to_art_list.setBounds(419, 319, 89, 23);
+		panel_6.add(retour_to_art_list);
 
 	}
 
