@@ -26,6 +26,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import controller_blog.Admin_dao;
@@ -116,105 +117,15 @@ public class Formulaire_blog extends JFrame {
 		layeredPane.setBounds(0, 0, 556, 364);
 		panel_2.add(layeredPane);
 
-		panel.setBounds(0, 0, 556, 370);
-		panel.setBackground(new Color(143, 188, 143));
-		panel.setLayout(null);
-		layeredPane.add(panel);
-
-		JLabel lblNewLabel = new JLabel("--Inscription--");
-		lblNewLabel.setBounds(138, 11, 288, 30);
-		lblNewLabel.setFont(new Font("Ravie", Font.BOLD, 26));
-		panel.add(lblNewLabel);
-
-		JLabel lblNom = new JLabel("Nom ");
-		lblNom.setBounds(296, 69, 40, 25);
-		panel.add(lblNom);
-
-		JLabel lblPrnom = new JLabel("Pr\u00E9nom ");
-		lblPrnom.setBounds(279, 128, 57, 14);
-		panel.add(lblPrnom);
-
-		JLabel lblEmail = new JLabel("Email ");
-		lblEmail.setBounds(290, 177, 40, 14);
-		panel.add(lblEmail);
-
-		JLabel lblPassword = new JLabel("Mot de passe");
-		lblPassword.setBounds(249, 228, 76, 14);
-		panel.add(lblPassword);
-
-		inp_nom = new JTextField();
-		inp_nom.setBounds(335, 71, 118, 20);
-		panel.add(inp_nom);
-		inp_nom.setColumns(10);
-
-		inp_prenom = new JTextField();
-		inp_prenom.setBounds(335, 125, 118, 20);
-		panel.add(inp_prenom);
-		inp_prenom.setColumns(10);
-
-		inp_email = new JTextField();
-		inp_email.setBounds(335, 174, 118, 20);
-		panel.add(inp_email);
-		inp_email.setColumns(10);
-
-		inp_password = new JPasswordField();
-		inp_password.setBounds(335, 225, 118, 20);
-		panel.add(inp_password);
-
-		JLabel lblNewLabel_5 = new JLabel("CRUD MANIA");
-		lblNewLabel_5.setForeground(new Color(0, 0, 0));
-		lblNewLabel_5.setBounds(20, 128, 230, 106);
-		lblNewLabel_5.setFont(new Font("Ravie", Font.BOLD, 26));
-		panel.add(lblNewLabel_5);
-		panel.revalidate();
-
-		JButton envoyer = new JButton("s'inscrire");
-		envoyer.setBorder(UIManager.getBorder("CheckBox.border"));
-		envoyer.setRolloverEnabled(false);
-		envoyer.setBounds(226, 307, 110, 23);
-		panel.add(envoyer);
-
-		JButton btnNewButton = new JButton("J'ai un compte");
-		btnNewButton.setBorder(UIManager.getBorder("CheckBox.border"));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				add_remove(panel_1);
-			}
-		});
-		btnNewButton.setBounds(346, 307, 118, 23);
-		panel.add(btnNewButton);
-
-		envoyer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String nom = inp_nom.getText();
-				String prenom = inp_prenom.getText();
-				String email = inp_email.getText();
-				String password = String.valueOf(inp_password.getPassword());
-				UserDao userDao = new UserDao();
-				User user = new User(nom, prenom, email, password);
-
-				if (userDao.create(user)) {
-					JOptionPane.showMessageDialog(contentPane, "bravo compte crée");
-
-				} else {
-					JOptionPane.showMessageDialog(contentPane, "changez de mail ou remplissez bien les champs !");
-				}
-				;
-
-				add_remove(panel_1);
-			}
-
-		});
-
 		panel_1.setLayout(null);
 		panel_1.setBackground(new Color(143, 188, 143));
 		panel_1.setBounds(0, 0, 556, 370);
 		layeredPane.add(panel_1);
 
-		JLabel Title_connexion = new JLabel("--Connexion--");
+		JLabel Title_connexion = new JLabel("Connexion");
 		Title_connexion.setForeground(new Color(0, 0, 0));
-		Title_connexion.setFont(new Font("Ravie", Font.BOLD, 26));
-		Title_connexion.setBounds(136, 16, 270, 64);
+		Title_connexion.setFont(new Font("Stencil", Font.BOLD, 26));
+		Title_connexion.setBounds(31, 97, 270, 64);
 		panel_1.add(Title_connexion);
 
 		JLabel lblEmail_1 = new JLabel("Email ");
@@ -269,14 +180,15 @@ public class Formulaire_blog extends JFrame {
 						JButton gerer_user = new JButton("G\u00E9rer les utilisateurs");
 						gerer_user.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
-								DefaultTableModel dtm = (DefaultTableModel) table_users.getModel();
-								dtm.setRowCount(0);
 								// generer le tableau des users
 								Admin_dao admin_dao = new Admin_dao();
-								// System.out.println(admin_dao.Admin_user_Read());
+								DefaultTableModel dtm = (DefaultTableModel) table_users.getModel();
+								dtm.setRowCount(0);
 
+								// System.out.println(admin_dao.Admin_user_Read());
+								ArrayList<User> user = admin_dao.Admin_user_Read();
 								// on ajoute dynamiquement chaque ligne avec un foreach
-								(admin_dao.Admin_user_Read()).forEach(element ->
+								user.forEach(element ->
 
 								dtm.addRow(new Object[] { element.getId(), element.getNom(), element.getPrenom(),
 										element.getEmail(), element.getPassword(), element.getIsAdmin() }));
@@ -292,8 +204,8 @@ public class Formulaire_blog extends JFrame {
 					JButton add_article = new JButton("ajouter un article");
 					add_article.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							cont_title.setVisible(true);
 							image_blog.setVisible(true);
+							cont_title.setVisible(true);
 							add_remove(panel_4);
 						}
 					});
@@ -404,8 +316,8 @@ public class Formulaire_blog extends JFrame {
 		JLabel lblNewLabel_5_1 = new JLabel("CRUD MANIA");
 		lblNewLabel_5_1.setBackground(new Color(240, 248, 255));
 		lblNewLabel_5_1.setForeground(new Color(0, 0, 0));
-		lblNewLabel_5_1.setFont(new Font("Ravie", Font.BOLD, 26));
-		lblNewLabel_5_1.setBounds(31, 125, 270, 158);
+		lblNewLabel_5_1.setFont(new Font("Stencil", Font.BOLD, 26));
+		lblNewLabel_5_1.setBounds(31, 151, 270, 83);
 		panel_1.add(lblNewLabel_5_1);
 
 		JButton btnNewButton_1 = new JButton("inscription");
@@ -426,6 +338,162 @@ public class Formulaire_blog extends JFrame {
 
 		isAdmin.setBounds(10, 26, 103, 14);
 		panel_1.add(isAdmin);
+
+		panel.setBounds(0, 0, 556, 370);
+		panel.setBackground(new Color(143, 188, 143));
+		panel.setLayout(null);
+		layeredPane.add(panel);
+
+		JLabel lblNewLabel = new JLabel("Inscription");
+		lblNewLabel.setBounds(39, 153, 230, 30);
+		lblNewLabel.setFont(new Font("Stencil", Font.BOLD, 26));
+		panel.add(lblNewLabel);
+
+		JLabel lblNom = new JLabel("Nom ");
+		lblNom.setBounds(296, 69, 40, 25);
+		panel.add(lblNom);
+
+		JLabel lblPrnom = new JLabel("Pr\u00E9nom ");
+		lblPrnom.setBounds(279, 128, 57, 14);
+		panel.add(lblPrnom);
+
+		JLabel lblEmail = new JLabel("Email ");
+		lblEmail.setBounds(290, 177, 40, 14);
+		panel.add(lblEmail);
+
+		JLabel lblPassword = new JLabel("Mot de passe");
+		lblPassword.setBounds(249, 228, 76, 14);
+		panel.add(lblPassword);
+
+		inp_nom = new JTextField();
+		inp_nom.setBounds(335, 71, 118, 20);
+		panel.add(inp_nom);
+		inp_nom.setColumns(10);
+
+		inp_prenom = new JTextField();
+		inp_prenom.setBounds(335, 125, 118, 20);
+		panel.add(inp_prenom);
+		inp_prenom.setColumns(10);
+
+		inp_email = new JTextField();
+		inp_email.setBounds(335, 174, 118, 20);
+		panel.add(inp_email);
+		inp_email.setColumns(10);
+
+		inp_password = new JPasswordField();
+		inp_password.setBounds(335, 225, 118, 20);
+		panel.add(inp_password);
+
+		JLabel lblNewLabel_5 = new JLabel("CRUD MANIA");
+		lblNewLabel_5.setForeground(new Color(0, 0, 0));
+		lblNewLabel_5.setBounds(39, 50, 230, 106);
+		lblNewLabel_5.setFont(new Font("Stencil", Font.BOLD, 26));
+		panel.add(lblNewLabel_5);
+		panel.revalidate();
+
+		JButton envoyer = new JButton("s'inscrire");
+		envoyer.setBorder(UIManager.getBorder("CheckBox.border"));
+		envoyer.setRolloverEnabled(false);
+		envoyer.setBounds(226, 307, 110, 23);
+		panel.add(envoyer);
+
+		JButton btnNewButton = new JButton("J'ai un compte");
+		btnNewButton.setBorder(UIManager.getBorder("CheckBox.border"));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				add_remove(panel_1);
+			}
+		});
+		btnNewButton.setBounds(346, 307, 118, 23);
+		panel.add(btnNewButton);
+
+		envoyer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String nom = inp_nom.getText();
+				String prenom = inp_prenom.getText();
+				String email = inp_email.getText();
+				String password = String.valueOf(inp_password.getPassword());
+				UserDao userDao = new UserDao();
+				User user = new User(nom, prenom, email, password);
+
+				if (userDao.create(user)) {
+					JOptionPane.showMessageDialog(contentPane, "bravo compte crée");
+
+				} else {
+					JOptionPane.showMessageDialog(contentPane, "changez de mail ou remplissez bien les champs !");
+				}
+				;
+
+				add_remove(panel_1);
+			}
+
+		});
+		layeredPane.setLayer(panel_3, 0);
+		panel_3.setAutoscrolls(true);
+		panel_3.setBackground(new Color(143, 188, 143));
+		panel_3.setBounds(0, 0, 556, 370);
+		layeredPane.add(panel_3);
+
+		JButton deconnecter_1 = new JButton("Se d\u00E9connecter");
+		deconnecter_1.setRolloverEnabled(false);
+		deconnecter_1.setBounds(421, 336, 125, 23);
+		deconnecter_1.setFocusable(false);
+		deconnecter_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				add_remove(panel_1);
+				panel_3.removeAll();
+				panel_3.add(deconnecter_1);
+			}
+		});
+		panel_3.setLayout(null);
+		// table.setFillsViewportHeight(true);
+
+		// panel_3.add(table_1);
+
+		panel_3.add(deconnecter_1);
+		panel_4.setRequestFocusEnabled(false);
+		panel_4.setDoubleBuffered(false);
+		panel_4.setEnabled(false);
+		panel_4.setBackground(new Color(143, 188, 143));
+
+		panel_4.setBounds(0, 0, 556, 370);
+		layeredPane.add(panel_4);
+		panel_4.setLayout(null);
+
+		JLabel titre_article = new JLabel("Titre de l'article");
+		titre_article.setBounds(28, 31, 89, 14);
+		panel_4.add(titre_article);
+
+		JLabel contenu_article = new JLabel("Contenu de l'article");
+		contenu_article.setBounds(28, 107, 152, 14);
+		panel_4.add(contenu_article);
+
+		cont_article.setLineWrap(true);
+		cont_article.setBounds(28, 132, 250, 127);
+
+		cont_title = new JTextArea();
+		cont_title.setVisible(false);
+		cont_title.setLineWrap(true);
+		cont_title.setBorder(null);
+		cont_title.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+		cont_title.setBounds(28, 56, 250, 20);
+		cont_title.setColumns(10);
+
+		JScrollPane scrollPane_titre_panel_4 = new JScrollPane(cont_title);
+		scrollPane_titre_panel_4.setBounds(28, 56, 250, 29);
+		panel_4.add(scrollPane_titre_panel_4);
+
+		JScrollPane scrollPane_contenu_panel_4 = new JScrollPane(cont_article);
+		scrollPane_contenu_panel_4.setBounds(28, 132, 250, 159);
+		panel_4.add(scrollPane_contenu_panel_4);
+
+		image_blog.setVisible(false);
+		image_blog.setIcon(new ImageIcon(Formulaire_blog.class.getResource("/images/blog.gif")));
+		image_blog.setBounds(353, 31, 208, 213);
+
+		JScrollPane scrollPane_image_panel_4 = new JScrollPane(image_blog);
+		scrollPane_image_panel_4.setBounds(309, 64, 203, 203);
+		panel_4.add(scrollPane_image_panel_4);
 		panel_5.setBackground(new Color(143, 188, 143));
 
 		panel_5.setBounds(0, 0, 556, 370);
@@ -442,7 +510,7 @@ public class Formulaire_blog extends JFrame {
 
 		JLabel lblNewLabel_6 = new JLabel("Le fameux show !");
 		lblNewLabel_6.setBounds(155, 11, 235, 33);
-		lblNewLabel_6.setFont(new Font("Source Code Pro Black", Font.BOLD, 23));
+		lblNewLabel_6.setFont(new Font("Stencil", Font.BOLD, 23));
 		lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_5.add(lblNewLabel_6);
 
@@ -653,49 +721,75 @@ public class Formulaire_blog extends JFrame {
 		JScrollPane scrollPane_titre_post = new JScrollPane(affiche_titre_post);
 		scrollPane_titre_post.setBounds(10, 77, 243, 33);
 		panel_5.add(scrollPane_titre_post);
-		panel_4.setRequestFocusEnabled(false);
-		panel_4.setDoubleBuffered(false);
-		panel_4.setEnabled(false);
-		panel_4.setBackground(new Color(143, 188, 143));
 
-		panel_4.setBounds(0, 0, 556, 370);
-		layeredPane.add(panel_4);
-		panel_4.setLayout(null);
+		panel_6.setBackground(new Color(143, 188, 143));
+		panel_6.setBounds(0, 0, 556, 370);
+		layeredPane.add(panel_6);
+		panel_6.setLayout(null);
 
-		JLabel titre_article = new JLabel("Titre de l'article");
-		titre_article.setBounds(28, 31, 89, 14);
-		panel_4.add(titre_article);
+		table_users = new JTable();
+		table_users.setBackground(Color.GREEN);
+		table_users.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "ID", "Nom", "Prenom", "Email", "Password", "Admin ?" }));
+		table_users.getColumnModel().getColumn(0).setPreferredWidth(78);
+		table_users.getColumnModel().getColumn(1).setPreferredWidth(98);
+		table_users.getColumnModel().getColumn(2).setPreferredWidth(121);
+		table_users.getColumnModel().getColumn(3).setPreferredWidth(134);
+		table_users.getColumnModel().getColumn(4).setPreferredWidth(92);
+		table_users.getColumnModel().getColumn(5).setPreferredWidth(101);
+		table_users.setBounds(433, 241, -347, -182);
 
-		JLabel contenu_article = new JLabel("Contenu de l'article");
-		contenu_article.setBounds(28, 107, 152, 14);
-		panel_4.add(contenu_article);
+		// centrer les infos du tableau users
 
-		cont_article.setLineWrap(true);
-		cont_article.setBounds(28, 132, 250, 127);
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
-		cont_title = new JTextArea();
-		cont_title.setVisible(false);
-		cont_title.setLineWrap(true);
-		cont_title.setBorder(null);
-		cont_title.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
-		cont_title.setBounds(28, 56, 250, 20);
-		cont_title.setColumns(10);
+		for (int x = 0; x < table_users.getColumnCount(); x++) {
+			table_users.getColumnModel().getColumn(x).setCellRenderer(centerRenderer);
+		}
+		////////// ----------------------------------/////////////////
+		DefaultTableModel model_table_user = (DefaultTableModel) table_users.getModel();
+		table_users.setRowHeight(30);
 
-		JScrollPane scrollPane_titre_panel_4 = new JScrollPane(cont_title);
-		scrollPane_titre_panel_4.setBounds(28, 56, 250, 29);
-		panel_4.add(scrollPane_titre_panel_4);
+		// mouse click event sur les ligne du tableau des users
+		table_users.addMouseListener((MouseListener) new MouseAdapter() {
 
-		JScrollPane scrollPane_contenu_panel_4 = new JScrollPane(cont_article);
-		scrollPane_contenu_panel_4.setBounds(28, 132, 250, 159);
-		panel_4.add(scrollPane_contenu_panel_4);
+			public void mouseClicked(MouseEvent e) {
+				int row = table_users.getSelectedRow();
 
-		image_blog.setVisible(false);
-		image_blog.setIcon(new ImageIcon(Formulaire_blog.class.getResource("/images/blog.gif")));
-		image_blog.setBounds(353, 31, 208, 213);
+				id_admin_user.setText(String.valueOf(model_table_user.getDataVector().get(row).get(0)));
+				changer_nom_user.setText((String) model_table_user.getDataVector().get(row).get(1));
+				changer_prenom_user.setText((String) model_table_user.getDataVector().get(row).get(2));
+				input_becoming_admin.setText(String.valueOf(model_table_user.getDataVector().get(row).get(5)));
 
-		JScrollPane scrollPane_image_panel_4 = new JScrollPane(image_blog);
-		scrollPane_image_panel_4.setBounds(309, 64, 203, 203);
-		panel_4.add(scrollPane_image_panel_4);
+				add_remove(panel_7);
+
+				System.out.println(model_table_user.getDataVector().get(row));
+			}
+		});
+
+		JScrollPane scrollPane_users = new JScrollPane(table_users);
+		scrollPane_users.setBounds(21, 58, 512, 231);
+		panel_6.add(scrollPane_users);
+
+		JButton retour_to_art_list = new JButton("retour");
+		retour_to_art_list.setRolloverEnabled(false);
+		retour_to_art_list.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				DefaultTableModel model_table_1 = (DefaultTableModel) table_1.getModel();
+				model_table_1.setRowCount(0);
+				ArticleDao read_articl = new ArticleDao();
+
+				(read_articl.read()).forEach(element -> model_table_1.addRow(new Object[] { element.getId(),
+						element.getTitre(), element.getContenu(), element.getDate(), element.getPrenom_auteur() }));
+
+				add_remove(panel_3);
+
+			}
+		});
+		retour_to_art_list.setBounds(419, 319, 89, 23);
+		panel_6.add(retour_to_art_list);
 
 		panel_7.setBackground(new Color(143, 188, 143));
 		panel_7.setBounds(0, 0, 556, 370);
@@ -713,6 +807,31 @@ public class Formulaire_blog extends JFrame {
 		panel_7.add(changer_prenom_user);
 
 		JButton valider_changement_user = new JButton("Valider les changements");
+		valider_changement_user.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String user_nom = changer_nom_user.getText();
+				String user_prenom = changer_prenom_user.getText();
+				int user_id = Integer.valueOf(id_admin_user.getText());
+				int user_admin_field = Integer.valueOf(input_becoming_admin.getText());
+
+				Admin_dao admin_dao = new Admin_dao();
+				// realiser l'update
+				admin_dao.update_user(user_nom, user_prenom, user_admin_field, user_id);
+
+				// generer le tableau des users de nouveau
+				DefaultTableModel dtm = (DefaultTableModel) table_users.getModel();
+				dtm.setRowCount(0);
+				// System.out.println(admin_dao.Admin_user_Read());
+				// on ajoute dynamiquement chaque ligne avec un foreach
+				(admin_dao.Admin_user_Read()).forEach(element ->
+
+				dtm.addRow(new Object[] { element.getId(), element.getNom(), element.getPrenom(), element.getEmail(),
+						element.getPassword(), element.getIsAdmin() }));
+				// revenir au panel_6
+				add_remove(panel_6);
+
+			}
+		});
 		valider_changement_user.setBorder(UIManager.getBorder("CheckBox.border"));
 		valider_changement_user.setBackground(new JButton().getBackground());
 		valider_changement_user.setRolloverEnabled(false);
@@ -724,23 +843,28 @@ public class Formulaire_blog extends JFrame {
 		supprimer_user.setRolloverEnabled(false);
 		supprimer_user.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int id_user_a_supprimer = Integer.valueOf(id_admin_user.getText());
-				Admin_dao admin_dao = new Admin_dao();
-				admin_dao.delete_user(id_user_a_supprimer);
 
-				DefaultTableModel dtm = (DefaultTableModel) table_users.getModel();
-				dtm.setRowCount(0);
-				// generer le tableau des users
+				if (id_admin_user.getText().equalsIgnoreCase(id_user.getText())) {
 
-				// System.out.println(admin_dao.Admin_user_Read());
+					JOptionPane.showMessageDialog(contentPane,
+							"Vous ne pouvez pas vous supprimer vous même, il faut pas déconner..");
+				} else {
+					int id_user_a_supprimer = Integer.valueOf(id_admin_user.getText());
+					Admin_dao admin_dao = new Admin_dao();
+					admin_dao.delete_user(id_user_a_supprimer);
 
-				// on ajoute dynamiquement chaque ligne avec un foreach
-				(admin_dao.Admin_user_Read()).forEach(element ->
+					DefaultTableModel dtm = (DefaultTableModel) table_users.getModel();
+					dtm.setRowCount(0);
+					// generer le tableau des users
 
-				dtm.addRow(new Object[] { element.getId(), element.getNom(), element.getPrenom(), element.getEmail(),
-						element.getPassword(), element.getIsAdmin() }));
+					// on ajoute dynamiquement chaque ligne avec un foreach
+					(admin_dao.Admin_user_Read()).forEach(element ->
 
-				add_remove(panel_6);
+					dtm.addRow(new Object[] { element.getId(), element.getNom(), element.getPrenom(),
+							element.getEmail(), element.getPassword(), element.getIsAdmin() }));
+
+					add_remove(panel_6);
+				}
 			}
 		});
 		supprimer_user.setBounds(246, 238, 182, 23);
@@ -792,90 +916,6 @@ public class Formulaire_blog extends JFrame {
 		JLabel lblNewLabel_10 = new JLabel("0 = non  1 = oui");
 		lblNewLabel_10.setBounds(456, 210, 90, 14);
 		panel_7.add(lblNewLabel_10);
-		layeredPane.setLayer(panel_3, 0);
-		panel_3.setAutoscrolls(true);
-		panel_3.setBackground(new Color(143, 188, 143));
-		panel_3.setBounds(0, 0, 556, 370);
-		layeredPane.add(panel_3);
-
-		JButton deconnecter_1 = new JButton("Se d\u00E9connecter");
-		deconnecter_1.setRolloverEnabled(false);
-		deconnecter_1.setBounds(421, 336, 125, 23);
-		deconnecter_1.setFocusable(false);
-		deconnecter_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				add_remove(panel_1);
-				panel_3.removeAll();
-				panel_3.add(deconnecter_1);
-			}
-		});
-		panel_3.setLayout(null);
-		// table.setFillsViewportHeight(true);
-
-		// panel_3.add(table_1);
-
-		panel_3.add(deconnecter_1);
-
-		panel_6.setBackground(new Color(143, 188, 143));
-		panel_6.setBounds(0, 0, 556, 370);
-		layeredPane.add(panel_6);
-		panel_6.setLayout(null);
-
-		table_users = new JTable();
-		table_users.setBackground(Color.GREEN);
-		table_users.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "ID", "Nom", "Prenom", "Email", "Password", "Admin ?" }));
-		table_users.getColumnModel().getColumn(0).setPreferredWidth(78);
-		table_users.getColumnModel().getColumn(1).setPreferredWidth(98);
-		table_users.getColumnModel().getColumn(2).setPreferredWidth(121);
-		table_users.getColumnModel().getColumn(3).setPreferredWidth(134);
-		table_users.getColumnModel().getColumn(4).setPreferredWidth(92);
-		table_users.getColumnModel().getColumn(5).setPreferredWidth(101);
-		table_users.setBounds(433, 241, -347, -182);
-
-		DefaultTableModel model_table_user = (DefaultTableModel) table_users.getModel();
-		table_users.setRowHeight(30);
-
-		// mouse click event sur les ligne du tableau des users
-		table_users.addMouseListener((MouseListener) new MouseAdapter() {
-
-			public void mouseClicked(MouseEvent e) {
-				int row = table_users.getSelectedRow();
-
-				id_admin_user.setText(String.valueOf(model_table_user.getDataVector().get(row).get(0)));
-				changer_nom_user.setText((String) model_table_user.getDataVector().get(row).get(1));
-				changer_prenom_user.setText((String) model_table_user.getDataVector().get(row).get(2));
-				input_becoming_admin.setText(String.valueOf(model_table_user.getDataVector().get(row).get(5)));
-
-				add_remove(panel_7);
-
-				System.out.println(model_table_user.getDataVector().get(row));
-			}
-		});
-
-		JScrollPane scrollPane_users = new JScrollPane(table_users);
-		scrollPane_users.setBounds(21, 58, 512, 231);
-		panel_6.add(scrollPane_users);
-
-		JButton retour_to_art_list = new JButton("retour");
-		retour_to_art_list.setRolloverEnabled(false);
-		retour_to_art_list.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				DefaultTableModel model_table_1 = (DefaultTableModel) table_1.getModel();
-				model_table_1.setRowCount(0);
-				ArticleDao read_articl = new ArticleDao();
-
-				(read_articl.read()).forEach(element -> model_table_1.addRow(new Object[] { element.getId(),
-						element.getTitre(), element.getContenu(), element.getDate(), element.getPrenom_auteur() }));
-
-				add_remove(panel_3);
-
-
-			}
-		});
-		retour_to_art_list.setBounds(419, 319, 89, 23);
-		panel_6.add(retour_to_art_list);
 
 	}
 
@@ -883,7 +923,7 @@ public class Formulaire_blog extends JFrame {
 		layeredPane.removeAll();
 		layeredPane.add(pane);
 		pane.repaint();
-		pane.revalidate();
+		pane.validate();
 	}
 	// add_remove prenant un objet user en paramètre , c'est du best practice, bien
 	// reverifier cette façon de fair
@@ -901,6 +941,17 @@ public class Formulaire_blog extends JFrame {
 		table_1.getColumnModel().getColumn(4).setPreferredWidth(101);
 		table_1.setBounds(10, 45, 100, 200);
 
+		// centrer les infos du tableau article
+
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
+		for (int x = 0; x < table_1.getColumnCount(); x++) {
+			table_1.getColumnModel().getColumn(x).setCellRenderer(centerRenderer);
+
+		}
+
+		/////////////////////
 		JScrollPane scrollPane = new JScrollPane(table_1);
 		scrollPane.setBounds(10, 64, 526, 243);
 		panel_3.add(scrollPane);

@@ -16,6 +16,7 @@ public class ArticleDao implements Idao<Articles> {
 	public boolean create(Articles object) {
 		// TODO Auto-generated method stub
 		try {
+			Connection connect = new Connections().getConnection();
 			PreparedStatement sql = connect
 					.prepareStatement("INSERT INTO article(titre,contenu,auteur,date) VALUES(?,?,?,now())");
 
@@ -38,7 +39,7 @@ public class ArticleDao implements Idao<Articles> {
 		ArrayList<Articles> tab_article = new ArrayList<Articles>();
 		try {
 			PreparedStatement sql = connect.prepareStatement(
-					"SELECT * FROM Article INNER JOIN users ON users.idusers=article.auteur ORDER BY date DESC");
+					"SELECT * FROM Article LEFT JOIN users ON users.idusers=article.auteur ORDER BY date DESC");
 
 			ResultSet rs = sql.executeQuery();
 
@@ -46,6 +47,10 @@ public class ArticleDao implements Idao<Articles> {
 
 				Articles article = new Articles(rs.getInt("idarticle"), rs.getString("titre"), rs.getString("contenu"),
 						rs.getString("date"), rs.getString("prenom"));
+				if (article.getPrenom_auteur() == null) {
+
+					article.setPrenom_auteur("Ancien Membre");
+				}
 				tab_article.add(article);
 			}
 			;
