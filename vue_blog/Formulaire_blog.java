@@ -767,7 +767,14 @@ public class Formulaire_blog extends JFrame {
 		table_users = new JTable();
 		table_users.setBackground(Color.GREEN);
 		table_users.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "ID", "Nom", "Prenom", "Email", "Password", "Admin ?" }));
+				new String[] { "ID", "Nom", "Prenom", "Email", "Password", "Admin ?" }) {
+			/*cellules non editables*/	
+			 @Override
+		    public boolean isCellEditable(int row, int column) {
+			       //all cells false
+			       return false;
+			    }
+		});
 		table_users.getColumnModel().getColumn(0).setPreferredWidth(78);
 		table_users.getColumnModel().getColumn(1).setPreferredWidth(98);
 		table_users.getColumnModel().getColumn(2).setPreferredWidth(121);
@@ -976,7 +983,13 @@ public class Formulaire_blog extends JFrame {
 		table_1.setBackground(Color.GREEN);
 
 		table_1.setModel(
-				new DefaultTableModel(new String[] { "ID", "Titre", "contenu", "Date de cr\u00E9ation", "Auteur" }, 0));
+				new DefaultTableModel(new String[] { "ID", "Titre", "contenu", "Date de cr\u00E9ation", "Auteur" }, 0) {
+					 @Override
+					    public boolean isCellEditable(int row, int column) {
+					       //all cells false
+					       return false;
+					    }
+				});
 
 		table_1.getColumnModel().getColumn(4).setPreferredWidth(92);
 		table_1.getColumnModel().getColumn(4).setPreferredWidth(101);
