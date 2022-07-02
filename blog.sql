@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 18 juin 2022 à 18:18
+-- Généré le : sam. 02 juil. 2022 à 21:08
 -- Version du serveur : 10.4.24-MariaDB
 -- Version de PHP : 7.4.29
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `blog`
 --
-CREATE DATABASE IF NOT EXISTS `blog` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `blog`;
 
 -- --------------------------------------------------------
 
@@ -59,9 +57,10 @@ CREATE TABLE `commentaires` (
 CREATE TABLE `users` (
   `idusers` int(11) NOT NULL,
   `nom` varchar(45) CHARACTER SET utf8mb4 DEFAULT NULL,
-  `prenom` varchar(45) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `prenom` varchar(45) CHARACTER SET utf8mb4 DEFAULT 'ancien membre',
   `email` varchar(45) CHARACTER SET utf8mb4 DEFAULT NULL,
-  `password` varchar(45) CHARACTER SET utf8mb4 DEFAULT NULL
+  `password` varchar(45) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `isAdmin` int(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
