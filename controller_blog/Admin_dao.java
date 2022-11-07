@@ -20,6 +20,7 @@ public class Admin_dao {
 
 			sql.setInt(1, article.getId());
 			sql.executeUpdate();
+			sql.close();
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
@@ -31,6 +32,7 @@ public class Admin_dao {
 			sqll.setInt(1, article.getId());
 
 			sqll.executeUpdate();
+			sqll.close();
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -50,6 +52,7 @@ public class Admin_dao {
 			sql.setString(2, article.getContenu());
 			sql.setInt(3, article.getId());
 			sql.executeUpdate();
+			sql.close();
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -75,6 +78,8 @@ public class Admin_dao {
 			}
 
 			System.out.println("liste des users retourné");
+			sql.close();
+			rs.close();
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
@@ -90,6 +95,7 @@ public class Admin_dao {
 			sqll.setInt(1, iduser);
 
 			sqll.executeUpdate();
+			sqll.close();
 
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -120,6 +126,7 @@ public class Admin_dao {
 			sqll.setInt(4, iduser);
 
 			sqll.executeUpdate();
+			sqll.close();
 			System.out.println("executé");
 			return true;
 		} catch (Exception e) {

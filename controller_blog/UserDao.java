@@ -32,6 +32,7 @@ public class UserDao implements Idao<User> {
 				sql.setString(4, object.getPassword());
 
 				sql.executeUpdate();
+				sql.close();
 				return true;
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -59,7 +60,8 @@ public class UserDao implements Idao<User> {
 						rs.getString("email"), rs.getString("password"));
 				tab.add(user);
 			}
-			;
+			sql.close();
+			rs.close();
 
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -84,8 +86,8 @@ public class UserDao implements Idao<User> {
 						rs.getString("email"), rs.getString("password"));
 				tab.add(user);
 			}
-			;
-
+			sql.close();
+			rs.close();
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
@@ -109,12 +111,12 @@ public class UserDao implements Idao<User> {
 
 			if (rs.next()) {
 				User user = new User(rs.getInt("idusers"), rs.getString("nom"), rs.getString("prenom"),
-						rs.getString("email"), rs.getString("password"),rs.getInt("isAdmin"));
+						rs.getString("email"), rs.getString("password"), rs.getInt("isAdmin"));
 				tab_user.add(user);
 				// return tab_user;
 
 			}
-
+			sql.close();
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());

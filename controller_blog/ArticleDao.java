@@ -25,6 +25,7 @@ public class ArticleDao implements Idao<Articles> {
 			sql.setInt(3, object.getAuteur());
 
 			sql.executeUpdate();
+			sql.close();
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -53,7 +54,8 @@ public class ArticleDao implements Idao<Articles> {
 				}
 				tab_article.add(article);
 			}
-			;
+			sql.close();
+			rs.close();
 
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -84,6 +86,8 @@ public class ArticleDao implements Idao<Articles> {
 					sqll.setInt(3, article.getId());
 
 					sqll.executeUpdate();
+					sql.close();
+					rs.close();
 					return true;
 				} catch (Exception e) {
 					// TODO: handle exception
@@ -127,8 +131,11 @@ public class ArticleDao implements Idao<Articles> {
 					// TODO: handle exception
 					System.out.println(e.getMessage());
 				}
+				
 
 			}
+			sql.close();
+			rs.close();
 			return false;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -147,6 +154,7 @@ public class ArticleDao implements Idao<Articles> {
 			sql.setInt(1, id_coms);
 
 			sql.executeUpdate();
+			sql.close();
 			System.out.println("les commentaires associées sont supprimé");
 			return true;
 		} catch (Exception e) {

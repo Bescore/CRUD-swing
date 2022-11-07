@@ -37,6 +37,7 @@ public class commentaireDao implements Idao<commentaires> {
 
 				sql.executeUpdate();
 				System.out.println("l'article a été commenté !");
+				sql.close();
 				return true;
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -64,7 +65,7 @@ public class commentaireDao implements Idao<commentaires> {
 						rs.getInt("auteur_du_commentaire"), rs.getString("prenom"));
 				tab_coms.add(comments);
 			}
-			;
+			sql.close();
 
 		} catch (Exception e) {
 			// TODO: handle exception
