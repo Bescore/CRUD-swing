@@ -10,7 +10,7 @@ import dao.Idao;
 import modele_blog.commentaires;
 
 public class commentaireDao implements Idao<commentaires> {
-	Connection connect = new Connections().getConnection();
+	
 
 	@Override
 	public ArrayList<commentaires> read() {
@@ -22,7 +22,7 @@ public class commentaireDao implements Idao<commentaires> {
 	@Override
 	public boolean create(commentaires object) {
 		// TODO Auto-generated method stub
-
+		Connection connect = new Connections().getConnection();
 		if (object.getContenu_com().equalsIgnoreCase("") || object.getAuteur_com() <= 0) {
 			return false;
 		} else {
@@ -36,8 +36,7 @@ public class commentaireDao implements Idao<commentaires> {
 				sql.setInt(3, object.getId());
 
 				sql.executeUpdate();
-				System.out.println("l'article a été commenté !");
-				sql.close();
+				connect.close();
 				return true;
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -51,6 +50,7 @@ public class commentaireDao implements Idao<commentaires> {
 	@Override
 	public ArrayList<commentaires> findycom(int com) {
 		// TODO Auto-generated method stub
+		Connection connect = new Connections().getConnection();
 		ArrayList<commentaires> tab_coms = new ArrayList<commentaires>();
 		try {
 			PreparedStatement sql = connect.prepareStatement(
@@ -65,7 +65,7 @@ public class commentaireDao implements Idao<commentaires> {
 						rs.getInt("auteur_du_commentaire"), rs.getString("prenom"));
 				tab_coms.add(comments);
 			}
-			sql.close();
+			connect.close();
 
 		} catch (Exception e) {
 			// TODO: handle exception

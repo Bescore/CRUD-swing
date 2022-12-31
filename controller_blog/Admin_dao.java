@@ -10,11 +10,11 @@ import modele_blog.Articles;
 import modele_blog.User;
 
 public class Admin_dao {
-	Connection connect = new Connections().getConnection();
+	
 
 	public boolean delete(Articles article) {
 		// TODO Auto-generated method stub
-
+		Connection connect = new Connections().getConnection();
 		try {
 			PreparedStatement sql = connect.prepareStatement("DELETE FROM article WHERE idarticle=? ");
 
@@ -32,7 +32,7 @@ public class Admin_dao {
 			sqll.setInt(1, article.getId());
 
 			sqll.executeUpdate();
-			sqll.close();
+			connect.close();
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -43,7 +43,7 @@ public class Admin_dao {
 	}
 
 	public boolean update(Articles article) {
-
+		Connection connect = new Connections().getConnection();
 		try {
 			PreparedStatement sql = connect
 					.prepareStatement("UPDATE article SET titre=?, contenu=? WHERE idarticle=? ");
@@ -52,7 +52,7 @@ public class Admin_dao {
 			sql.setString(2, article.getContenu());
 			sql.setInt(3, article.getId());
 			sql.executeUpdate();
-			sql.close();
+			connect.close();
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -63,7 +63,7 @@ public class Admin_dao {
 	}
 
 	public ArrayList<User> Admin_user_Read() {
-
+		Connection connect = new Connections().getConnection();
 		ArrayList<User> tab_user = new ArrayList<User>();
 		try {
 			PreparedStatement sql = connect.prepareStatement("SELECT * FROM users ");
@@ -78,8 +78,7 @@ public class Admin_dao {
 			}
 
 			System.out.println("liste des users retourné");
-			sql.close();
-			rs.close();
+			connect.close();
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
@@ -88,14 +87,14 @@ public class Admin_dao {
 	}
 
 	public boolean delete_user(int iduser) {
-
+		Connection connect = new Connections().getConnection();
 		try {
 			PreparedStatement sqll = connect.prepareStatement("DELETE FROM users WHERE idusers=?");
 
 			sqll.setInt(1, iduser);
 
 			sqll.executeUpdate();
-			sqll.close();
+			connect.close();
 
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -116,6 +115,7 @@ public class Admin_dao {
 	}
 
 	public boolean update_user(String nom, String prenom, int isAdmin, int iduser) {
+		Connection connect = new Connections().getConnection();
 		try {
 			PreparedStatement sqll = connect
 					.prepareStatement("UPDATE users SET nom=?,prenom=?,isAdmin=? WHERE idusers=?");
@@ -126,7 +126,7 @@ public class Admin_dao {
 			sqll.setInt(4, iduser);
 
 			sqll.executeUpdate();
-			sqll.close();
+			connect.close();
 			System.out.println("executé");
 			return true;
 		} catch (Exception e) {

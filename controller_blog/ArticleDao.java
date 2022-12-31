@@ -10,13 +10,14 @@ import dao.Idao;
 import modele_blog.Articles;
 
 public class ArticleDao implements Idao<Articles> {
-	Connection connect = new Connections().getConnection();
+	
 
 	@Override
 	public boolean create(Articles object) {
 		// TODO Auto-generated method stub
+		Connection connect = new Connections().getConnection();
 		try {
-			Connection connect = new Connections().getConnection();
+			
 			PreparedStatement sql = connect
 					.prepareStatement("INSERT INTO article(titre,contenu,auteur,date) VALUES(?,?,?,now())");
 
@@ -25,7 +26,7 @@ public class ArticleDao implements Idao<Articles> {
 			sql.setInt(3, object.getAuteur());
 
 			sql.executeUpdate();
-			sql.close();
+			connect.close();
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -37,10 +38,11 @@ public class ArticleDao implements Idao<Articles> {
 	@Override
 	public ArrayList<Articles> read() {
 		// TODO Auto-generated method stub
+		Connection connect = new Connections().getConnection();
 		ArrayList<Articles> tab_article = new ArrayList<Articles>();
 		try {
 			PreparedStatement sql = connect.prepareStatement(
-					"SELECT * FROM Article LEFT JOIN users ON users.idusers=article.auteur ORDER BY date DESC");
+					"SELECT * FROM article LEFT JOIN users ON users.idusers=article.auteur ORDER BY date DESC");
 
 			ResultSet rs = sql.executeQuery();
 
@@ -54,8 +56,7 @@ public class ArticleDao implements Idao<Articles> {
 				}
 				tab_article.add(article);
 			}
-			sql.close();
-			rs.close();
+			//connect.close();
 
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -66,7 +67,7 @@ public class ArticleDao implements Idao<Articles> {
 
 	public boolean update_article(Articles article) {
 		// TODO Auto-generated method stub
-
+		Connection connect = new Connections().getConnection();
 		try {
 			PreparedStatement sql = connect.prepareStatement(
 					"SELECT * FROM article inner join users where article.auteur=users.idusers AND article.auteur=? AND idarticle=? ");
@@ -86,8 +87,7 @@ public class ArticleDao implements Idao<Articles> {
 					sqll.setInt(3, article.getId());
 
 					sqll.executeUpdate();
-					sql.close();
-					rs.close();
+					connect.close();
 					return true;
 				} catch (Exception e) {
 					// TODO: handle exception
@@ -107,7 +107,7 @@ public class ArticleDao implements Idao<Articles> {
 
 	public boolean delete(Articles article) {
 		// TODO Auto-generated method stub
-
+		Connection connect = new Connections().getConnection();
 		try {
 			PreparedStatement sql = connect.prepareStatement(
 					"SELECT * FROM article inner join users where article.auteur=users.idusers AND article.auteur=? AND idarticle=? ");
@@ -134,8 +134,7 @@ public class ArticleDao implements Idao<Articles> {
 				
 
 			}
-			sql.close();
-			rs.close();
+			connect.close();
 			return false;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -147,14 +146,14 @@ public class ArticleDao implements Idao<Articles> {
 
 	public boolean delete_associate_coms(int id_coms) {
 		// TODO Auto-generated method stub
-
+		Connection connect = new Connections().getConnection();
 		try {
 			PreparedStatement sql = connect.prepareStatement("DELETE FROM commentaires  WHERE com_article=?");
 
 			sql.setInt(1, id_coms);
 
 			sql.executeUpdate();
-			sql.close();
+			connect.close();
 			System.out.println("les commentaires associées sont supprimé");
 			return true;
 		} catch (Exception e) {

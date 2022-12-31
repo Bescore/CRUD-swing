@@ -9,11 +9,12 @@ import modele_blog.User;
 
 public class UserDao implements Idao<User> {
 
-	Connection connect = new Connections().getConnection();
+	
 
 	@Override
 	public boolean create(User object) {
 		// TODO Auto-generated method stub
+		Connection connect = new Connections().getConnection();
 		if (object.getNom().equalsIgnoreCase("") || object.getPrenom().equalsIgnoreCase("")
 				|| object.getEmail().equalsIgnoreCase("") || object.getPassword().equalsIgnoreCase("")) {
 			return false;
@@ -24,15 +25,15 @@ public class UserDao implements Idao<User> {
 		} else {
 			try {
 				PreparedStatement sql = connect
-						.prepareStatement("INSERT INTO users(nom,prenom,email,password) VALUES(?,?,?,PASSWORD(?))");
+						.prepareStatement("INSERT INTO users(nom,prenom,email,password) VALUES(?,?,?,CONCAT('*', UPPER(SHA1(UNHEX(SHA1(?))))))");
 
 				sql.setString(1, object.getNom());
 				sql.setString(2, object.getPrenom());
 				sql.setString(3, object.getEmail());
 				sql.setString(4, object.getPassword());
-
+				
 				sql.executeUpdate();
-				sql.close();
+				connect.close();
 				return true;
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -48,6 +49,7 @@ public class UserDao implements Idao<User> {
 	@Override
 	public ArrayList<User> read() {
 		// TODO Auto-generated method stub
+		Connection connect = new Connections().getConnection();
 		ArrayList<User> tab = new ArrayList<User>();
 		try {
 			PreparedStatement sql = connect.prepareStatement("SELECT * FROM users ");
@@ -60,8 +62,7 @@ public class UserDao implements Idao<User> {
 						rs.getString("email"), rs.getString("password"));
 				tab.add(user);
 			}
-			sql.close();
-			rs.close();
+			connect.close();
 
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -72,6 +73,7 @@ public class UserDao implements Idao<User> {
 
 	public ArrayList<User> readee(User object) {
 		// TODO Auto-generated method stub
+		Connection connect = new Connections().getConnection();
 		ArrayList<User> tab = new ArrayList<User>();
 		try {
 			PreparedStatement sql = connect.prepareStatement("SELECT * FROM users where email=? ");
@@ -86,8 +88,7 @@ public class UserDao implements Idao<User> {
 						rs.getString("email"), rs.getString("password"));
 				tab.add(user);
 			}
-			sql.close();
-			rs.close();
+			connect.close();
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
@@ -98,11 +99,12 @@ public class UserDao implements Idao<User> {
 	@Override
 	public ArrayList<User> findby(String email, String password) {
 		// TODO Auto-generated method stub
+		Connection connect = new Connections().getConnection();
 		ArrayList<User> tab_user = new ArrayList<User>();
 
 		try {
 			PreparedStatement sql = connect
-					.prepareStatement("SELECT * FROM users where email= ? AND password=PASSWORD(?) ");
+					.prepareStatement("SELECT * FROM users where email= ? AND password=CONCAT('*', UPPER(SHA1(UNHEX(SHA1(?))))) ");
 
 			sql.setString(1, email);
 			sql.setString(2, password);
@@ -116,7 +118,7 @@ public class UserDao implements Idao<User> {
 				// return tab_user;
 
 			}
-			sql.close();
+			connect.close();
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
